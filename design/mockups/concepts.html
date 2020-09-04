@@ -1,0 +1,214 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Calyx</title>
+    <link href="https://fonts.googleapis.com/css?family=Cutive+Mono|Libre+Franklin:300,400,500,600,700|Work+Sans:700,800" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/calyx-docs.css">
+  </head>
+  <body>
+    <div class="navbar">
+  <div class="nav-brand">
+    <div class="logo">
+      <button class="nav-toggle">☰</button>
+      <figure class="logo-mark">
+        <a href="/"><img src="/assets/calyx-flower.svg"></a>
+      </figure>
+      <h1 class="logo-type"><a href="/">Calyx</a></h1>
+    </div>
+    <div class="nav-menu">
+      <ul>
+        <li><a href="/documentation/">Documentation</a></li>
+        <li><a href="/examples/">Examples</a></li>
+        <li><a href="/changelog/">Changelog</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="nav-menu is-meta">
+    <ul>
+      <li><a href="https://github.com/maetl/calyx"><svg aria-labelledby="simpleicons-github-icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+  <title id="simpleicons-github-icon">GitHub icon</title>
+  <path fill="#fff" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+</svg>
+<span>GitHub Project</span></a></li>
+      <li><a href="https://rubygems.org/gems/calyx"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+   viewBox="0 0 200 200" enable-background="new 0 0 200 200" width="28" height="28">
+  <g id="Logo">
+    <polygon fill="#fff" points="68.8,69.9 68.7,69.8 46.5,92 100.4,145.8 122.6,123.7 154.3,92 132.1,69.8 132.1,69.7 68.7,69.7
+      "/>
+    <path fill="#fff" d="M100.2,10.6l-78.5,45v90l78.5,45l78.5-45v-90L100.2,10.6z M163.7,137l-63.5,36.6L36.7,137V64l63.5-36.6
+      L163.7,64V137z"/>
+  </g>
+</svg>
+<span>RubyGems Package</span></a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="page">
+
+<div class="pagebar">
+  <ul class="breadcrumbs">
+    <li><a href="/">Home</a></li>
+
+
+        <li><a href="/introduction/">Introduction</a></li>
+
+
+
+
+  </ul>
+  <h1>Key Concepts</h1>
+</div>
+
+  <div class="row">
+  <div class="col docs-content">
+    <div class="content card">
+      <h2 id="what-are-grammars">What are grammars?</h2>
+
+<p>A grammar is a set of interconnected rules that describe the syntax of a language. The grammar rules describe how to form strings in that language based on an alphabet.</p>
+
+<h2 id="a-dash-of-theory">A dash of theory</h2>
+
+<p>Traditionally, generative grammars are often described as recognizers. Given a particular string as input, the grammar defines whether or not that string is recognized.</p>
+
+<p>For example, let’s imagine what a pseudocode grammar representing whole numbers greater than zero might look like.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>start := leading_digit *digit
+leading_digit := 1..9
+digit := 0..9
+</code></pre></div></div>
+
+<p>If we could turn this pseudocode grammar into a recognizer function and run it on a range of possible strings, we’d see the following results.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">grammar</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="s2">"1"</span><span class="p">)</span>      <span class="c1"># =&gt; true</span>
+<span class="n">grammar</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="s2">"2"</span><span class="p">)</span>      <span class="c1"># =&gt; true</span>
+<span class="n">grammar</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="s2">"99"</span><span class="p">)</span>     <span class="c1"># =&gt; true</span>
+<span class="n">grammar</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="s2">"111"</span><span class="p">)</span>    <span class="c1"># =&gt; true</span>
+<span class="n">grammar</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="s2">"134534"</span><span class="p">)</span> <span class="c1"># =&gt; true</span>
+<span class="n">grammar</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="s2">"0"</span><span class="p">)</span>      <span class="c1"># =&gt; false</span>
+<span class="n">grammar</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="s2">"055"</span><span class="p">)</span>    <span class="c1"># =&gt; false</span>
+<span class="n">grammar</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="s2">"abc"</span><span class="p">)</span>    <span class="c1"># =&gt; false</span>
+<span class="n">grammar</span><span class="p">.</span><span class="nf">parse</span><span class="p">(</span><span class="s2">"1.5"</span><span class="p">)</span>    <span class="c1"># =&gt; false</span>
+</code></pre></div></div>
+
+<p>How does it work?</p>
+
+<p>The grammar here is made up of ‘production rules’, which in turn are made up of named symbols called ‘nonterminals’ and literal patterns called ‘terminals’ which match a range of possible strings.</p>
+
+<p>In this case, <code class="language-plaintext highlighter-rouge">start</code>, <code class="language-plaintext highlighter-rouge">leading_digit</code> and <code class="language-plaintext highlighter-rouge">digit</code> are nonterminals whereas <code class="language-plaintext highlighter-rouge">1..9</code> and <code class="language-plaintext highlighter-rouge">0..9</code> are terminals. By convention, <code class="language-plaintext highlighter-rouge">*</code> means ‘zero or more’, which specifies that the production can match repeating characters over and over until an unmatched character is found (formally, this is known as the <a href="https://en.wikipedia.org/wiki/Kleene_star">Kleene star</a>).</p>
+
+<p>To recognize a string with the grammar, we start with a left hand side nonterminal (by convention, this is known as the start symbol, often named <code class="language-plaintext highlighter-rouge">start</code>) and substitute it with its right hand side production. We then do the same for the next set of nonterminals we find in the production, until we bottom out at a set of terminals matching the literal string.</p>
+
+<p>If we walk through</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>grammar.parse("1")
+</code></pre></div></div>
+
+<ol>
+  <li>Replace <code class="language-plaintext highlighter-rouge">start</code> with <code class="language-plaintext highlighter-rouge">leading_digit</code> then <code class="language-plaintext highlighter-rouge">*digit</code></li>
+  <li><code class="language-plaintext highlighter-rouge">leading_digit</code> is a terminal <code class="language-plaintext highlighter-rouge">1..9</code>, so check that the first character matches</li>
+  <li><code class="language-plaintext highlighter-rouge">*digit</code></li>
+</ol>
+
+<p>If you’re familiar with regular expressions, you’ll notice that this grammar seems to do exactly the same thing as the following regular expression.</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="sr">/^[1-9][0-9]*$/</span>
+</code></pre></div></div>
+
+<p>Remarkably, this isn’t a coincidence or example of TMTOWTDI. It turns out that there’s a deep symmetry between grammars and regular expressions. Every regular grammar can be transformed into an equivalent regular expression and vice versa.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Number := Zero | Integer | Decimal | Real
+Integer := LeadingDigit *Digit
+LeadingDigit := [1-9]
+Digit := [0-9]
+Decimal := Integer "." *Digit
+Real := Integer "/" Integer
+Zero := "0"
+</code></pre></div></div>
+
+<p>The following sequences are recognised as valid by the number grammar:</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">1</code></li>
+  <li><code class="language-plaintext highlighter-rouge">23.424</code></li>
+  <li><code class="language-plaintext highlighter-rouge">30000</code></li>
+  <li><code class="language-plaintext highlighter-rouge">1/7</code></li>
+</ul>
+
+<p>Template expansion grammars</p>
+
+    </div>
+  </div>
+  <div class="col docs-sidebar">
+    <div class="menu">
+
+  <p class="menu-label">
+    <a href="/introduction/" class="">Introduction</a>
+  </p>
+  <ul class="menu-list">
+
+    <li><a href="/introduction/tutorial" class="">Tutorial</a></li>
+
+    <li><a href="/introduction/concepts" class="">Key Concepts</a></li>
+
+    <li><a href="/introduction/beginners" class="">For Beginners</a></li>
+
+    <li><a href="/introduction/contributing" class="">Contributing</a></li>
+
+  </ul>
+
+  <p class="menu-label">
+    <a href="/guides/" class="">Guides</a>
+  </p>
+  <ul class="menu-list">
+
+    <li><a href="/guides/installation" class="">Installation</a></li>
+
+    <li><a href="/guides/results" class="">Generating Results</a></li>
+
+    <li><a href="/guides/dynamic-rules" class="">Dynamic Rules</a></li>
+
+    <li><a href="/guides/template-expressions" class="">Template Expressions</a></li>
+
+    <li><a href="/guides/weighted-choices" class="">Weighted Choices</a></li>
+
+    <li><a href="/guides/extending" class="">Extending Grammars</a></li>
+
+    <li><a href="/guides/random-seeds" class="">Random Seeds</a></li>
+
+  </ul>
+
+  <p class="menu-label">
+    <a href="/reference/" class="">Reference</a>
+  </p>
+  <ul class="menu-list">
+
+    <li><a href="/reference/config" class="">Configuration Options</a></li>
+
+    <li><a href="/reference/api" class="">API Listing</a></li>
+
+  </ul>
+
+</div>
+
+  </div>
+</div>
+
+</div>
+<script>
+window.addEventListener('load', function() {
+  var navbar = document.querySelector('.navbar');
+  var page = document.querySelector('.page');
+  var toggle = document.querySelector('.nav-toggle');
+  toggle.onclick = function(ev) {
+    navbar.classList.toggle('is-open');
+    page.classList.toggle('is-hidden');
+  }
+});
+</script>
+
+  </body>
+</html>

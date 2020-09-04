@@ -1,0 +1,16 @@
+<meta charset="<%= charset %>">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  <%= h @page_title %>
+  <% if options.title && @page_title != options.title %>
+    &mdash; <%= h options.title %>
+  <% end %>
+</title>
+<link href="https://fonts.googleapis.com/css?family=Cutive+Mono|Libre+Franklin:300,400,500,600,700|Work+Sans:700,800" rel="stylesheet">
+<% stylesheets.each do |stylesheet| %>
+  <link rel="stylesheet" href="<%= mtime_url(stylesheet) %>" type="text/css" />
+<% end %>
+<%= erb :script_setup %>
+<% javascripts.each do |javascript| %>
+  <script type="text/javascript" charset="utf-8" src="<%= mtime_url(javascript) %>"></script>
+<% end %>

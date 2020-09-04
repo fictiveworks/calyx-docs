@@ -1,0 +1,14 @@
+{
+  "name": "fictive-documentation",
+  "private": true,
+  "description": "Documentation monorepo for Fictive Works projects",
+  "scripts": {
+    "build:calyx": "jsdoc packages/calyx-js/ -r packages/calyx-js/README.md -t templates/jsdoc",
+    "build:mementus": "jsdoc packages/mementus-js/ -r packages/mementus-js/README.md -t templates/jsdoc"
+  },
+  "author": "Mark Rickerby <me@maetl.net> (https://maetl.net)",
+  "license": "MIT",
+  "devDependencies": {
+    "jsdoc": "^3.6.5"
+  }
+}

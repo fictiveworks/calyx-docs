@@ -1,0 +1,254 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Calyx</title>
+    <link href="https://fonts.googleapis.com/css?family=Cutive+Mono|Libre+Franklin:300,400,500,600,700|Work+Sans:700,800" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/calyx-docs.css">
+  </head>
+  <body>
+    <div class="navbar">
+  <div class="nav-brand">
+    <div class="logo">
+      <button class="nav-toggle">☰</button>
+      <figure class="logo-mark">
+        <a href="/"><img src="/assets/calyx-flower.svg"></a>
+      </figure>
+      <h1 class="logo-type"><a href="/">Calyx</a></h1>
+    </div>
+    <div class="nav-menu">
+      <ul>
+        <li><a href="/documentation/">Documentation</a></li>
+        <li><a href="/examples/">Examples</a></li>
+        <li><a href="/changelog/">Changelog</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="nav-menu is-meta">
+    <ul>
+      <li><a href="https://github.com/maetl/calyx"><svg aria-labelledby="simpleicons-github-icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+  <title id="simpleicons-github-icon">GitHub icon</title>
+  <path fill="#fff" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+</svg>
+<span>GitHub Project</span></a></li>
+      <li><a href="https://rubygems.org/gems/calyx"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+   viewBox="0 0 200 200" enable-background="new 0 0 200 200" width="28" height="28">
+  <g id="Logo">
+    <polygon fill="#fff" points="68.8,69.9 68.7,69.8 46.5,92 100.4,145.8 122.6,123.7 154.3,92 132.1,69.8 132.1,69.7 68.7,69.7
+      "/>
+    <path fill="#fff" d="M100.2,10.6l-78.5,45v90l78.5,45l78.5-45v-90L100.2,10.6z M163.7,137l-63.5,36.6L36.7,137V64l63.5-36.6
+      L163.7,64V137z"/>
+  </g>
+</svg>
+<span>RubyGems Package</span></a></li>
+    </ul>
+  </div>
+</div>
+
+<div class="page">
+
+<div class="pagebar">
+  <ul class="breadcrumbs">
+    <li><a href="/">Home</a></li>
+
+
+        <li><a href="/introduction/">Introduction</a></li>
+
+
+
+
+  </ul>
+  <h1>Tutorial</h1>
+</div>
+
+  <div class="row">
+  <div class="col docs-content">
+    <div class="content card">
+      <h2 id="objective">Objective</h2>
+
+<p>This tutorial introduces Calyx with a basic ‘hello world’ example. Following these steps will help you get Calyx up and running and provide you with a code skeleton to start adding more interesting and creative things.</p>
+
+<h2 id="initial-setup">Initial setup</h2>
+
+<p>Before getting started, you’ll need to install Calyx from RubyGems and have it available in your local dev environment:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem install calyx
+</code></pre></div></div>
+
+<p>If you’re not sure how to do this yet, there’s more information about setting up your Ruby environment in the <a href="/introduction/beginners/">resources for beginners</a>. The <a href="/docs/guide/installation/">installation guide</a> contains further details about prerequisites and how to download and install the Gem.</p>
+
+<h2 id="getting-started">Getting started</h2>
+
+<p>Create a file named <code class="language-plaintext highlighter-rouge">hello.rb</code> and add the following contents:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">require</span> <span class="s2">"calyx"</span>
+
+<span class="n">hello</span> <span class="o">=</span> <span class="no">Calyx</span><span class="o">::</span><span class="no">Grammar</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span>
+  <span class="n">start</span> <span class="s2">"Hello world!"</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p>The first line imports the Calyx library and the lines following use the <code class="language-plaintext highlighter-rouge">Calyx::Grammar</code> class to define the rules for the generated text, in this case just ‘Hello world!’.</p>
+
+<p>To generate the text result, call the <code class="language-plaintext highlighter-rouge">#generate</code> method on the grammar object. Add this to the bottom of the <code class="language-plaintext highlighter-rouge">hello.rb</code> file:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">puts</span> <span class="n">hello</span><span class="p">.</span><span class="nf">generate</span>
+</code></pre></div></div>
+
+<p>Run it on the command line by typing <code class="language-plaintext highlighter-rouge">ruby hello.rb</code>. You should see the following result:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Hello world!
+</code></pre></div></div>
+
+<h2 id="adding-random-choices">Adding random choices</h2>
+
+<p>Obviously, this hardcoded sentence isn’t very interesting by itself. To add variety to the text, rules can be defined with multiple choices to pick from:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">hello</span> <span class="o">=</span> <span class="no">Calyx</span><span class="o">::</span><span class="no">Grammar</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span>
+  <span class="n">start</span> <span class="s1">'Hello world!'</span><span class="p">,</span> <span class="s1">'Hi world!'</span><span class="p">,</span> <span class="s1">'Hey world!'</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p>Each time <code class="language-plaintext highlighter-rouge">#generate</code> runs, Calyx evaluates the grammar and randomly selects a single choice from the list of possible choices. So if we run the grammar three times, we might see three different results:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">hello</span><span class="p">.</span><span class="nf">generate</span>
+<span class="c1"># =&gt; Hi world!</span>
+
+<span class="n">hello</span><span class="p">.</span><span class="nf">generate</span>
+<span class="c1"># =&gt; Hello world!</span>
+
+<span class="n">hello</span><span class="p">.</span><span class="nf">generate</span>
+<span class="c1"># =&gt; Yo world!</span>
+</code></pre></div></div>
+
+<h2 id="nesting-rules-inside-rules">Nesting rules inside rules</h2>
+
+<p>When you embed the name of a rule in curly brackets inside a text fragment, Calyx will expand the embedded rule and replace it with generated output each time the grammar runs.</p>
+
+<p>The following example nests the <code class="language-plaintext highlighter-rouge">greeting</code> rule within the <code class="language-plaintext highlighter-rouge">start</code> rule:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">hello</span> <span class="o">=</span> <span class="no">Calyx</span><span class="o">::</span><span class="no">Grammar</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span>
+  <span class="n">start</span> <span class="s1">'{greeting} world!'</span>
+  <span class="n">greeting</span> <span class="s1">'Hello'</span><span class="p">,</span> <span class="s1">'Hi'</span><span class="p">,</span> <span class="s1">'Hey'</span><span class="p">,</span> <span class="s1">'Yo'</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p>This generates the exact same text as before, but listing the greeting words on their own is more flexible and eliminates the need to write each variation of the phrase out in full.</p>
+
+<p>This process of starting with a larger fragment of text and breaking it up into smaller phrases and single words is something you’ll do a lot when writing larger and more detailed grammars.</p>
+
+<h2 id="using-nesting-to-shape-the-text">Using nesting to shape the text</h2>
+
+<p>Rules can be arbitrarily nested and connected to generate larger and more complex texts. The way the rules branch out is going to define the shape and ‘flavor’ of the text.</p>
+
+<p>For example, to create more exaggerated variations of the phrase, we can branch out to pick from a list of happy adjectives or a list of sad adjectives:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">hello</span> <span class="o">=</span> <span class="no">Calyx</span><span class="o">::</span><span class="no">Grammar</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span>
+  <span class="n">start</span> <span class="s1">'{greeting} {world_phrase}.'</span>
+  <span class="n">greeting</span> <span class="s1">'Hello'</span><span class="p">,</span> <span class="s1">'Hi'</span><span class="p">,</span> <span class="s1">'Hey'</span><span class="p">,</span> <span class="s1">'Yo'</span>
+  <span class="n">world_phrase</span> <span class="s1">'{happy_adj} world'</span><span class="p">,</span> <span class="s1">'{sad_adj} world'</span><span class="p">,</span> <span class="s1">'world'</span>
+  <span class="n">happy_adj</span> <span class="s1">'wonderful'</span><span class="p">,</span> <span class="s1">'amazing'</span><span class="p">,</span> <span class="s1">'bright'</span><span class="p">,</span> <span class="s1">'beautiful'</span>
+  <span class="n">sad_adj</span> <span class="s1">'cruel'</span><span class="p">,</span> <span class="s1">'miserable'</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p>Nesting and branching can be manipulated to balance consistency with novelty. The exact same text fragments can be combined in a variety of ways to produce strikingly different resulting texts.</p>
+
+<p>The following grammar branches out at the top level, with <code class="language-plaintext highlighter-rouge">happy_phrase</code> and <code class="language-plaintext highlighter-rouge">sad_phrase</code> being generated from completely separate trees that don’t overlap:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">hello</span> <span class="o">=</span> <span class="no">Calyx</span><span class="o">::</span><span class="no">Grammar</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span>
+  <span class="n">start</span> <span class="s1">'{happy_phrase} world.'</span><span class="p">,</span> <span class="s1">'{sad_phrase} world.'</span>
+  <span class="n">happy_phrase</span> <span class="s1">'{happy_greeting} {happy_adj}'</span>
+  <span class="n">happy_greeting</span> <span class="s1">'Hello'</span><span class="p">,</span> <span class="s1">'Hi'</span><span class="p">,</span> <span class="s1">'Hey'</span><span class="p">,</span> <span class="s1">'Yo'</span>
+  <span class="n">happy_adj</span> <span class="s1">'wonderful'</span><span class="p">,</span> <span class="s1">'amazing'</span><span class="p">,</span> <span class="s1">'bright'</span><span class="p">,</span> <span class="s1">'beautiful'</span>
+  <span class="n">sad_phrase</span> <span class="s1">'{sad_greeting} {sad_adj}'</span>
+  <span class="n">sad_greeting</span> <span class="s1">'Goodbye'</span><span class="p">,</span> <span class="s1">'So long'</span><span class="p">,</span> <span class="s1">'Farewell'</span>
+  <span class="n">sad_adj</span> <span class="s1">'cruel'</span><span class="p">,</span> <span class="s1">'miserable'</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p>Whereas this variation of the grammar uses the same content but generates everything from a single branch, resulting in a word salad with happy and sad fragments mashed together:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">hello</span> <span class="o">=</span> <span class="no">Calyx</span><span class="o">::</span><span class="no">Grammar</span><span class="p">.</span><span class="nf">new</span> <span class="k">do</span>
+  <span class="n">start</span> <span class="s1">'{greeting} {adj} world.'</span>
+  <span class="n">greeting</span> <span class="s1">'Hello'</span><span class="p">,</span> <span class="s1">'Hi'</span><span class="p">,</span> <span class="s1">'Hey'</span><span class="p">,</span> <span class="s1">'Yo'</span><span class="p">,</span> <span class="s1">'Goodbye'</span><span class="p">,</span> <span class="s1">'So long'</span><span class="p">,</span> <span class="s1">'Farewell'</span>
+  <span class="n">adj</span> <span class="s1">'wonderful'</span><span class="p">,</span> <span class="s1">'amazing'</span><span class="p">,</span> <span class="s1">'bright'</span><span class="p">,</span> <span class="s1">'beautiful'</span><span class="p">,</span> <span class="s1">'cruel'</span><span class="p">,</span> <span class="s1">'miserable'</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<p>That’s really all you need to know to get started.</p>
+
+    </div>
+  </div>
+  <div class="col docs-sidebar">
+    <div class="menu">
+
+  <p class="menu-label">
+    <a href="/introduction/" class="">Introduction</a>
+  </p>
+  <ul class="menu-list">
+
+    <li><a href="/introduction/tutorial" class="is-active">Tutorial</a></li>
+
+    <li><a href="/introduction/concepts" class="">Key Concepts</a></li>
+
+    <li><a href="/introduction/beginners" class="">For Beginners</a></li>
+
+    <li><a href="/introduction/contributing" class="">Contributing</a></li>
+
+  </ul>
+
+  <p class="menu-label">
+    <a href="/guides/" class="">Guides</a>
+  </p>
+  <ul class="menu-list">
+
+    <li><a href="/guides/installation" class="">Installation</a></li>
+
+    <li><a href="/guides/results" class="">Generating Results</a></li>
+
+    <li><a href="/guides/dynamic-rules" class="">Dynamic Rules</a></li>
+
+    <li><a href="/guides/template-expressions" class="">Template Expressions</a></li>
+
+    <li><a href="/guides/weighted-choices" class="">Weighted Choices</a></li>
+
+    <li><a href="/guides/extending" class="">Extending Grammars</a></li>
+
+    <li><a href="/guides/random-seeds" class="">Random Seeds</a></li>
+
+  </ul>
+
+  <p class="menu-label">
+    <a href="/reference/" class="">Reference</a>
+  </p>
+  <ul class="menu-list">
+
+    <li><a href="/reference/config" class="">Configuration Options</a></li>
+
+    <li><a href="/reference/api" class="">API Listing</a></li>
+
+  </ul>
+
+</div>
+
+  </div>
+</div>
+
+</div>
+<script>
+window.addEventListener('load', function() {
+  var navbar = document.querySelector('.navbar');
+  var page = document.querySelector('.page');
+  var toggle = document.querySelector('.nav-toggle');
+  toggle.onclick = function(ev) {
+    navbar.classList.toggle('is-open');
+    page.classList.toggle('is-hidden');
+  }
+});
+</script>
+
+  </body>
+</html>
