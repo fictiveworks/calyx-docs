@@ -82,7 +82,7 @@ grammar = Calyx::Grammar.new do
 end
 ```
 
-We now have sentences that agree consistently but the trade-off is that the grammar is now much less flexible and has a lot of duplication. Although there are only two possible subject variations here, in practice we often want to build up these lists of nouns from external data sources or name generators where it’s not viable to carefully craft sentence fragments for each possible variation.
+We now have sentences that agree consistently but the trade-off is that the grammar is less flexible and has a lot of duplication. Although there are only two possible subject variations here, in practice we often want to build up these lists of nouns from external data sources or name generators where it’s not viable to carefully craft sentence fragments for each possible variation.
 
 One way to balance keeping the grammar context-free without losing the flexibility of atomic word lists is to carefully separate the sentence fragment branches and gramatical categories into a more intricate set of production rules.
 
@@ -111,8 +111,46 @@ Despite these drawbacks, there are situations where branching is a good pattern 
 - When flexibility or adaptability isn’t important
 - When you want your generator to be directly transferable to other tools and languages (eg: Tracery)
 
-## Consistent references using memos
+## Mappings and Memos
 
-If we want to avoid the duplication and complexity of branching, we need to introduce capabilities that go beyond the constraints of context-free expansion.
+If we want to avoid repetitive branching, we need to go beyond the constraints of context-free expansion.
+
+Mappings allow you to transform strings from one set into strings from another. They are declared as named rules in the grammar but require a rule symbol to be provided as an argument.
+
+
 
 Memos are one of the primary features Calyx provides to make this process easier. Prefixing an expression with the `@` sigil allows multiple references in the grammar to point to the same choice rather than picking a different branch each time.
+
+```ruby
+grammar = Calyx::Grammar.new do
+  filter :posessive do |noun|
+    case noun
+    when "Santa’s Little Helper" then "his"
+    when "Snowball" then "her"
+    else
+      "their"
+    end
+  end
+
+  mapping :pronoun, {
+    /Snowball/ => "her",
+    /Santa/ => "his"
+  }
+
+  start "{@animal} {verb} {@animal.posessive} {appendage}"
+  animal "Snowball", "Santa’s Little Helper"
+  verb "chases", "licks", "bites"
+  appendage "tail", "paw"
+end
+```
+
+```ruby
+grammar = Calyx::Grammar.new do
+  start "{@animal} {verb} {&@animal} {appendage}"
+  animal "Snowball", "Santa’s Little Helper"
+  snowball "her"
+  rule("Santa’s Little Helper", ["his"])
+  verb "chases", "licks", "bites"
+  appendage "tail", "paw"
+end
+```
