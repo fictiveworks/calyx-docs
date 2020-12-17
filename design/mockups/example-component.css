@@ -1,0 +1,104 @@
+body {
+  font-family: "Libre Franklin", sans-serif;
+}
+
+main {
+  margin: 0 auto;
+  width: 60%;
+}
+
+.example {
+  width: 100%;
+  background-color: #ddd;
+  display: flex;
+}
+
+.example .example-container {
+  width: 60%;
+}
+
+.example .example-output {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-left: 1px solid #ccc;
+}
+
+.example .example-tabs {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.example .example-tabs li {
+  font-weight: bold;
+  margin: 0;
+}
+
+.example .example-tabs li button {
+  display: inline-block;
+  border: none;
+  margin: 0;
+  padding: 2px 6px;
+  background-color: #bbb;
+  font-size: 100%;
+}
+
+.example .example-tabs li button:hover {
+  background-color: #aaa;
+}
+
+.example-header {
+  background-color: #bbb;
+}
+
+.example-footer {
+  background-color: #ccc;
+}
+
+.example-output .example-tabs {
+  justify-content: flex-end;
+}
+
+.example-ready {
+  width: 100%;
+  height: calc(100% - 46px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.example-run {
+  border: none;
+  background-color: transparent;
+}
+
+.example-run:hover {
+  cursor: pointer;
+}
+
+.example-run:hover .stroke-solid {
+  stroke: #aaa;
+}
+
+.example-run:hover .icon {
+  fill: #bbb;
+}
+
+.example-result {
+  display: none;
+}
+
+.stroke-solid {
+  stroke-width: 4px;
+}
+
+.example-code[aria-selected=true] {
+  display: block;
+}
+
+.example-code[aria-selected=false] {
+  display: none;
+}

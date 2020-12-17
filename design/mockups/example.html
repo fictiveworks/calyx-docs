@@ -1,0 +1,129 @@
+<html>
+  <head>
+    <title>Code Example Component</title>
+    <link rel="stylesheet" href="example-component.css">
+    <script src="https://unpkg.com/calyx@0.10.0/calyx.js"></script>
+  </head>
+  <body>
+    <main>
+
+    <article class="example">
+
+      <div class="example-container">
+
+        <header class="example-header">
+          <ul class="example-tabs">
+            <li><button role="tab" aria-selected="true">Ruby</button></li>
+            <li><button role="tab" aria-selected="false">JavaScript</button></li>
+            <li><button role="tab" aria-selected="true">JSON</button></li>
+          </ul>
+        </header>
+
+        <div class="example-code" aria-selected="true" id="ruby">
+          <pre><code>grammar = Calyx::Grammar.new do
+  start "One", "Two", "Three"
+end
+
+grammar.generate</code></pre>
+        </div>
+
+        <div class="example-code" aria-selected="false" id="javascript">
+          <pre><code>const grammar = calyx.grammar({
+  "start": ["One", "Two", "Three"]
+});
+
+grammar.generate()</code></pre>
+        </div>
+
+        <div class="example-code" aria-selected="false" id="json">
+          <pre>
+            <code>{
+              "start": ["One", "Two", "Three"]
+            }
+            </code>
+          </pre>
+        </div>
+
+        <footer class="example-footer">
+          <ul class="example-tabs">
+            <li><button role="button" id="copy-button">Copy</button></li>
+          </ul>
+        </footer>
+
+      </div>
+
+      <div class="example-output">
+        <header class="example-header">
+          <ul class="example-tabs">
+            <li><button role="tab" aria-selected="true">String</button></li>
+            <li><button role="tab" aria-selected="false">Result</button></li>
+          </ul>
+        </header>
+
+
+        <div class="example-ready">
+          <button class="example-run">
+            <svg version="1.1" id="run" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" height="100px" width="100px"
+            	 viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+              <path class="stroke-solid" fill="none" stroke="white"  d="M49.9,2.5C23.6,2.8,2.1,24.4,2.5,50.4C2.9,76.5,24.7,98,50.3,97.5c26.4-0.6,47.4-21.8,47.2-47.7
+                C97.3,23.7,75.7,2.3,49.9,2.5"/>
+              <path class="icon" fill="white" d="M38,69c-1,0.5-1.8,0-1.8-1.1V32.1c0-1.1,0.8-1.6,1.8-1.1l34,18c1,0.5,1,1.4,0,1.9L38,69z"/>
+            </svg>
+          </button>
+        </div>
+
+        <div class="example-result">
+
+        </div>
+
+        <footer class="example-footer">
+          <ul class="example-tabs">
+            <li><button role="button">Reset</button></li>
+          </ul>
+        </footer>
+      </div>
+
+    </article>
+
+    </main>
+
+    <script>
+      var start = calyx.grammar({
+        "start": ["One", "Two", "Three"]
+      });
+
+      function run() {
+        return start.generate()
+      }
+
+      function copy() {
+        const range = document.createRange();
+        const code = document.querySelector(".example-code[aria-selected=true] pre code")
+        range.selectNodeContents(code);
+        window.getSelection().addRange(range);
+        document.execCommand('copy');
+        window.getSelection().removeAllRanges();
+      }
+
+      var runButton = document.querySelector(".example-run")
+      var readyContainer = document.querySelector(".example-ready")
+      var resultContainer = document.querySelector(".example-result")
+      var copyButton = document.querySelector("#copy-button")
+
+      copyButton.onclick = function() {
+        copy();
+      }
+
+      runButton.onclick = function() {
+        readyContainer.style.display = "none";
+        resultContainer.style.display = "block";
+
+        const result = run();
+
+        resultContainer.innerHTML = `<p>${result.text}</p>`
+
+      }
+
+    </script>
+  </body>
+</html>
