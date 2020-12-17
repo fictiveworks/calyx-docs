@@ -1,4 +1,4 @@
 source "https://rubygems.org"
 
 gem "yard"
-gem "yarrow"
+gem "yarrow", git: "https://github.com/maetl/yarrow"

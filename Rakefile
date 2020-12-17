@@ -1,4 +1,10 @@
 require "yard"
+require "./generator"
+
+task :fictive do
+  fictive_path = "~/Projects/fictive/fictive-editor"
+  sh "cd #{fictive_path} && FICTIVE_PROJECT=#{Dir.pwd} npm start"
+end
 
 task :packages do
   sh "git clone https://github.com/maetl/calyx packages/calyx-rb"
@@ -7,18 +13,22 @@ task :packages do
   sh "git clone https://github.com/fictiveworks/mementus packages/mementus-js"
 end
 
+task :build do
+  generate_site
+end
+
 YARD::Templates::Engine.register_template_path("templates/yard")
 
-YARD::Rake::YardocTask.new do |t|
-  t.name = :calyx_api_rb
-  t.opts = ["--output-dir api", "--title 'Calyx API'"]
-  t.files = ["packages/calyx-rb/lib/**/*.rb"]
-end
-
-YARD::Rake::YardocTask.new do |t|
-  t.name = :mementus_api_rb
-  t.files = ["packages/mementus-rb/lib/**/*.rb"]
-end
+# YARD::Rake::YardocTask.new do |t|
+#   t.name = :calyx_api_rb
+#   t.opts = ["--output-dir api", "--title 'Calyx API'"]
+#   t.files = ["packages/calyx-rb/lib/**/*.rb"]
+# end
+#
+# YARD::Rake::YardocTask.new do |t|
+#   t.name = :mementus_api_rb
+#   t.files = ["packages/mementus-rb/lib/**/*.rb"]
+# end
 
 task :calyx_api_js do
   sh "npm run build:calyx"
