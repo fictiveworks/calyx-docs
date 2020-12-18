@@ -1,0 +1,19 @@
+.example-container,
+.example-output {
+  min-height: 180px;
+  display: grid;
+  grid-template-rows: 24px auto 24px;
+}
+
+.example-header {
+  grid-row-start: 1;
+}
+
+.example-result,
+.example-ready {
+  grid-row-start: 2;
+}
+
+.example-footer {
+  grid-row-start: 3;
+}
