@@ -77,7 +77,7 @@ function ExampleRun(state) {
   </div>`;
 }
 
-function ExampleOutput({ name }) {
+function ExampleConsole({ name }) {
   const [state, dispatch] = useReducer(outputReducer, initialState);
 
   const runExample = () => {
@@ -86,33 +86,32 @@ function ExampleOutput({ name }) {
       greeting: ["Hello", "Hi", "Hey", "Yo"]
     });
     const result = grammar.generate();
-
-    console.log(result.text)
-
     dispatch({ type: "run", result });
   }
 
   const resetExample = () => dispatch({ type: "reset" });
 
+  // This needs to go in as an effect
+  const allScripts = Array.from(this.querySelectorAll("example-script"));
 
-  console.log(this.shadowRoot)
-  // for (let prop in this) {
-  //   console.log(prop)
-  // }
+  console.log(allScripts)
+
+  const selectedTab = "Ruby";
 
   return html`
   <article class="example">
     <div class="example-container">
       <header class="example-header">
         <ul class="example-tabs">
-          <li><button role="tab" aria-selected="true">Ruby</button></li>
-          <li><button role="tab" aria-selected="false">JavaScript</button></li>
-          <li><button role="tab" aria-selected="true">JSON</button></li>
+          ${allScripts.map(el => {
+            const tab = el.getAttribute("tab");
+            return html`
+              <li><button role="tab" ?aria-selected=${tab == selectedTab}>${tab}</button></li>
+            `;
+          })}
         </ul>
       </header>
-      <slot name="Ruby">
-      <slot name="javascript">
-      <slot name="json">
+      <slot></slot>
       <footer class="example-footer">
         <ul class="example-tabs">
           <li><button role="button" id="copy-button">Copy</button></li>
@@ -140,33 +139,52 @@ function ExampleOutput({ name }) {
   `;
 }
 
-customElements.define("example-output", component(ExampleOutput, {
+customElements.define("example-console", component(ExampleConsole, {
   observedAttributes: ["name"],
   useShadowDOM: false
 }));
 
-function ExampleCode() {
+function ExampleScript({ slot, tab, selected }) {
+  const selectedAttr = selected ? "true" : "false";
   return html`
-    <div class="example-code" aria-selected="false" id="json">
+    <div class="example-code" aria-selected=${selectedAttr} id=${tab.toLowerCase()}>
+      <slot name="script"></slot>
+    </div>
+  `;
+}
+
+customElements.define("example-script", component(ExampleScript, {
+  observedAttributes: ["slot", "tab", "selected"]
+}));
+
+</script>
+
+<main>
+  <example-console id="tutorial1">
+    <example-script slot="script" tab="Ruby">
+      <pre><code>grammar = Calyx::Grammar.new do
+start '{greeting} world.'
+greeting 'Hello', 'Hi', 'Hey', 'Yo'
+end
+
+grammar.generate</code></pre>
+    </example-script>
+    <example-script slot="script" tab="JavaScript">
+      <pre><code>const grammar = calyx.grammar({
+"start": ["One", "Two", "Three"]
+});
+
+grammar.generate()</code></pre>
+    </example-script>
+    <example-script slot="script" tab="JSON" selected>
       <pre>
         <code>{
           "start": ["One", "Two", "Three"]
         }
         </code>
       </pre>
-    </div>
-  `;
-}
-
-customElements.define("example-code", component(ExampleCode, {
-  observedAttributes: ["language"],
-  useShadowDOM: false
-}));
-
-</script>
-
-<main>
-  <example-output name="Mark"></example-output>
+    </example-script>
+  </example-console>
 </main>
 
 </body>
