@@ -2,6 +2,10 @@ body {
   font-family: "Libre Franklin", sans-serif;
 }
 
+/* example-script:not([selected]) {
+  display: none;
+} */
+
 main {
   margin: 0 auto;
   width: 60%;
@@ -13,28 +17,28 @@ main {
   display: flex;
 }
 
-.example .example-container {
+.example-container {
   width: 60%;
 }
 
-.example .example-output {
+.example-output {
   width: 40%;
   border-left: 1px solid #ccc;
 }
 
-.example .example-tabs {
+.example-tabs {
   list-style-type: none;
   margin: 0;
   padding: 0;
   display: flex;
 }
 
-.example .example-tabs li {
+.example-tabs li {
   font-weight: bold;
   margin: 0;
 }
 
-.example .example-tabs li button {
+.example-tabs li button {
   display: inline-block;
   border: none;
   margin: 0;
@@ -43,7 +47,7 @@ main {
   font-size: 100%;
 }
 
-.example .example-tabs li button:hover {
+.example-tabs li button:hover {
   background-color: #aaa;
 }
 

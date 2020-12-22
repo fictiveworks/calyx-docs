@@ -11,7 +11,7 @@
 
 <script type="module">
 import { html, render, nothing } from 'https://unpkg.com/lit-html/lit-html.js';
-import { component, useState, useReducer } from 'https://unpkg.com/haunted/haunted.js';
+import { component, useState, useReducer, useEffect } from 'https://unpkg.com/haunted/haunted.js';
 
 function ExampleReady(runExample) {
   return html`<div class="example-ready">
@@ -79,6 +79,29 @@ function ExampleRun(state) {
 
 function ExampleConsole({ name }) {
   const [state, dispatch] = useReducer(outputReducer, initialState);
+  const [selectedTab, setSelectedTab] = useState(null);
+  const tabs = [];
+
+  useEffect(() => {
+    const currentScript = this.querySelector("example-script[selected]");
+
+    if (!selectedTab) {
+      setSelectedTab(currentScript.getAttribute("format"))
+    } else {
+      currentScript.style.display = "none";
+      currentScript.removeAttribute("selected");
+
+      const nextScript = this.querySelector(`example-script[label=${selectedTab}]`);
+      nextScript.style.display = "block";
+      nextScript.setAttribute("selected", "true");
+    }
+
+
+
+  }, [selectedTab]);
+
+  const exampleScripts = Array.from(this.querySelectorAll("example-script"));
+  const exampleTabs = exampleScripts.map(el => el.getAttribute("label"));
 
   const runExample = () => {
     const grammar = calyx.grammar({
@@ -91,22 +114,116 @@ function ExampleConsole({ name }) {
 
   const resetExample = () => dispatch({ type: "reset" });
 
-  // This needs to go in as an effect
-  const allScripts = Array.from(this.querySelectorAll("example-script"));
-
-  console.log(allScripts)
-
-  const selectedTab = "Ruby";
-
   return html`
+  <style>
+  .example {
+    width: 100%;
+    background-color: #ddd;
+    display: flex;
+  }
+
+  .example-container {
+    width: 60%;
+  }
+
+  .example-output {
+    width: 40%;
+    border-left: 1px solid #ccc;
+  }
+
+  .example-container,
+  .example-output {
+    min-height: 180px;
+    display: grid;
+    grid-template-rows: 24px auto 24px;
+  }
+
+  .example-header {
+    grid-row-start: 1;
+  }
+
+  .example-code,
+  .example-result,
+  .example-ready {
+    grid-row-start: 2;
+  }
+
+  .example-footer {
+    grid-row-start: 3;
+  }
+
+  .example-tabs {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+  }
+
+  .example-tabs li {
+    font-weight: bold;
+    margin: 0;
+  }
+
+  .example-tabs li button {
+    display: inline-block;
+    border: none;
+    margin: 0;
+    padding: 2px 6px;
+    background-color: #bbb;
+    font-size: 100%;
+  }
+
+  .example-tabs li button:hover {
+    background-color: #aaa;
+  }
+
+  .example-header {
+    background-color: #bbb;
+  }
+
+  .example-footer {
+    background-color: #ccc;
+  }
+
+  .example-output .example-tabs {
+    justify-content: flex-end;
+  }
+
+  .example-ready {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .example-run {
+    border: none;
+    background-color: transparent;
+  }
+
+  .example-run:hover {
+    cursor: pointer;
+  }
+
+  .example-run:hover .stroke-solid {
+    stroke: #aaa;
+  }
+
+  .example-run:hover .icon {
+    fill: #bbb;
+  }
+
+  .stroke-solid {
+    stroke-width: 4px;
+  }
+  </style>
   <article class="example">
     <div class="example-container">
       <header class="example-header">
         <ul class="example-tabs">
-          ${allScripts.map(el => {
-            const tab = el.getAttribute("tab");
+          ${exampleTabs.map(tab => {
+            const selectTab = () => setSelectedTab(tab)
             return html`
-              <li><button role="tab" ?aria-selected=${tab == selectedTab}>${tab}</button></li>
+              <li><button @click=${selectTab} role="tab" ?aria-selected=${tab == selectedTab}>${tab}</button></li>
             `;
           })}
         </ul>
@@ -141,27 +258,33 @@ function ExampleConsole({ name }) {
 
 customElements.define("example-console", component(ExampleConsole, {
   observedAttributes: ["name"],
-  useShadowDOM: false
+  useShadowDOM: true
 }));
 
-function ExampleScript({ slot, tab, selected }) {
+function ExampleScript({ label, selected }) {
   const selectedAttr = selected ? "true" : "false";
+
   return html`
-    <div class="example-code" aria-selected=${selectedAttr} id=${tab.toLowerCase()}>
-      <slot name="script"></slot>
+    <style>
+      :host(:not([selected])) {
+        display: none;
+      }
+    </style>
+    <div class="example-code" aria-selected=${selectedAttr}>
+      <slot></slot>
     </div>
   `;
 }
 
 customElements.define("example-script", component(ExampleScript, {
-  observedAttributes: ["slot", "tab", "selected"]
+  observedAttributes: ["label", "selected"]
 }));
 
 </script>
 
 <main>
   <example-console id="tutorial1">
-    <example-script slot="script" tab="Ruby">
+    <example-script label="Ruby">
       <pre><code>grammar = Calyx::Grammar.new do
 start '{greeting} world.'
 greeting 'Hello', 'Hi', 'Hey', 'Yo'
@@ -169,14 +292,14 @@ end
 
 grammar.generate</code></pre>
     </example-script>
-    <example-script slot="script" tab="JavaScript">
+    <example-script label="JavaScript">
       <pre><code>const grammar = calyx.grammar({
 "start": ["One", "Two", "Three"]
 });
 
 grammar.generate()</code></pre>
     </example-script>
-    <example-script slot="script" tab="JSON" selected>
+    <example-script label="JSON" selected>
       <pre>
         <code>{
           "start": ["One", "Two", "Three"]
