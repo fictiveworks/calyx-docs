@@ -4,11 +4,17 @@
   "description": "Documentation monorepo for Fictive Works projects",
   "scripts": {
     "build:calyx": "jsdoc packages/calyx-js/ -r packages/calyx-js/README.md -t templates/jsdoc",
-    "build:mementus": "jsdoc packages/mementus-js/ -r packages/mementus-js/README.md -t templates/jsdoc"
+    "build:mementus": "jsdoc packages/mementus-js/ -r packages/mementus-js/README.md -t templates/jsdoc",
+    "start:ui": "snowpack dev",
+    "build:ui": "snowpack build"
   },
   "author": "Mark Rickerby <me@maetl.net> (https://maetl.net)",
   "license": "MIT",
+  "dependencies": {
+    "example-console": "file:///Users/maetl/Projects/fictive/example-console"
+  },
   "devDependencies": {
-    "jsdoc": "^3.6.5"
+    "jsdoc": "^3.6.5",
+    "snowpack": "^2.18.5"
   }
 }

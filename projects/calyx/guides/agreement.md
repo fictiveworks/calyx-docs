@@ -17,10 +17,10 @@ When the subject of a sentence varies by person, the verb must follow:
 
 When the antecedent of a sentence has a defined or implied gender, any following pronouns must match that gender:
 
-- Catra raises her arm
-- Bow raises his arm
-- Double Trouble raises their arm
-- A Horde-Bot raises its arm
+- Michael collects her data (she has a lot)
+- Stamets collects his data (he has a lot)
+- Adira collects their data (they have a lot)
+- The Sphere collects its data (it has a lot)
 
 ## Number
 
@@ -39,13 +39,37 @@ Determiners also have their own specific singular and plural forms:
 - That robot
 - Those robots
 
-We don’t usually think about these categories consciously when we’re writing as we know what ‘sounds right’ but it’s worth establishing the rules explicitly here because grammatical agreement has a tendency to confound simple methods of text generation using template expansion. There are extra steps required to make sure all parts of a sentence agree.
+We don’t often think about these categories consciously when we’re writing as we know what ‘sounds right’. It’s worth establishing the rules explicitly here because grammatical agreement has a tendency to confound simple methods of text generation using template expansion. There are extra steps required to make sure all parts of a sentence agree.
 
 ## Context-free expansion
 
 Expanding a context-free grammar gives a result where none of the chosen parts have any relationship to one another.
 
 In following example, we pick from a list of nouns (Snowball, Santa’s Little Helper) and a list of verbs (chases, licks, bites) which are entirely independent.
+
+<example-console>
+
+<example-code markdown="block" label="ruby" tab="ruby" selected="true">
+```ruby
+Calyx::Grammar.new do
+  start "{animal} {verb}."
+  animal "Snowball", "Santa’s Little Helper"
+  verb "chases", "licks", "bites"
+end
+```
+</example-code>
+
+<example-code markdown="block" label="javascript" tab="javascript" selected="false">
+```javascript
+calyx.grammar({
+  start: "{animal} {verb}."
+  animal: ["Snowball", "Santa’s Little Helper"]
+  verb: ["chases", "licks", "bites"]
+})
+```
+</example-code>
+
+</example-console>
 
 ```ruby
 grammar = Calyx::Grammar.new do

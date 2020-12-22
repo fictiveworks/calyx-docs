@@ -100,10 +100,10 @@ end
 def generate_site
   entries = Dir["./projects/calyx/**/*.md"].sort
 
-  source = Yarrow::Content::Source.new(input_dir: "./projects/calyx/")
-  content = Yarrow::Content::Graph.from_dir_source(source)
+  #source = Yarrow::Content::Source.new(input_dir: "./projects/calyx/")
+  #content = Yarrow::Content::Graph.from_dir_source(source)
 
-  p content
+  #p content
 
   entries.each do |path|
     build_document(path)

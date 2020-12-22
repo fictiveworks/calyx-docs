@@ -4,3 +4,4 @@ doc/
 out/
 node_modules/
 packages/
+build/

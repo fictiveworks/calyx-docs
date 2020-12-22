@@ -1,5 +1,21 @@
+#require "yarrow"
 require "yard"
 require "./generator"
+
+task :dev_server do
+  class DevServer < Yarrow::Server
+    def config
+      Yarrow::Configuration.new(output_dir: "./build", server: {
+        port: 4200,
+        host: "localhost",
+        handler: "webrick"
+      })
+    end
+  end
+
+  server = DevServer.new
+  server.run
+end
 
 task :fictive do
   fictive_path = "~/Projects/fictive/fictive-editor"
