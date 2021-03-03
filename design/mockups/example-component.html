@@ -27,8 +27,8 @@ function ExampleReady(runExample) {
 }
 
 const ResultView = {
-  STRING: 0,
-  OBJECT: 1
+  STRING: "string",
+  INSPECT: "inspect"
 }
 
 // const ExampleResult = virtual((state) => {
@@ -59,15 +59,26 @@ function outputReducer(state, action) {
     case "run":
       return { isReady: false, result: action.result, mode: state.mode };
     case "mode":
-      return { isReady: false, result, mode: action.mode }
+      return { isReady: false, result: state.result, mode: action.mode }
     case "reset":
       return initialState;
   }
 }
 
-function ExampleRun(state) {
-  console.log(state.result.text)
+function ExampleInspector(result) {
+  //const nodes = Array.isArray(result) ? 
 
+  return html`
+    <ul class="example-object">
+      <li>-> Result(${result.text})
+
+      </li>
+    </ul>
+  `;
+}
+
+function ExampleRun(state) {
+  console.log(state)
   const markup = (state.mode == ResultView.STRING)
     ? html`<p class="example-text">${state.result.text}</p>`
     : html`<div class="example-inspector">${ExampleInspector(state.result)}</div>`;
@@ -95,9 +106,6 @@ function ExampleConsole({ name }) {
       nextScript.style.display = "block";
       nextScript.setAttribute("selected", "true");
     }
-
-
-
   }, [selectedTab]);
 
   const exampleScripts = Array.from(this.querySelectorAll("example-script"));
@@ -113,6 +121,9 @@ function ExampleConsole({ name }) {
   }
 
   const resetExample = () => dispatch({ type: "reset" });
+
+  const stringMode = () => dispatch({ type: "mode", mode: "string" });
+  const inspectMode = () => dispatch({ type: "mode", mode: "inspect" });
 
   return html`
   <style>
@@ -212,6 +223,10 @@ function ExampleConsole({ name }) {
     fill: #bbb;
   }
 
+  .example-text {
+    padding: 1em;
+  }
+
   .stroke-solid {
     stroke-width: 4px;
   }
@@ -238,8 +253,8 @@ function ExampleConsole({ name }) {
     <div class="example-output">
       <header class="example-header">
         <ul class="example-tabs">
-          <li><button role="tab" aria-selected="true">String</button></li>
-          <li><button role="tab" aria-selected="false">Result</button></li>
+          <li><button role="tab" @click=${stringMode} aria-selected="true">String</button></li>
+          <li><button role="tab" @click=${inspectMode} aria-selected="false">Result</button></li>
         </ul>
       </header>
       ${state.isReady ? ExampleReady(runExample) : ExampleRun(state)}
@@ -269,6 +284,10 @@ function ExampleScript({ label, selected }) {
       :host(:not([selected])) {
         display: none;
       }
+      .example-code {
+        padding: 1em;
+        font-size: 1.2em;
+      }
     </style>
     <div class="example-code" aria-selected=${selectedAttr}>
       <slot></slot>
@@ -286,26 +305,25 @@ customElements.define("example-script", component(ExampleScript, {
   <example-console id="tutorial1">
     <example-script label="Ruby">
       <pre><code>grammar = Calyx::Grammar.new do
-start '{greeting} world.'
-greeting 'Hello', 'Hi', 'Hey', 'Yo'
+  start '{greeting} world.'
+  greeting 'Hello', 'Hi', 'Hey', 'Yo'
 end
 
 grammar.generate</code></pre>
     </example-script>
     <example-script label="JavaScript">
       <pre><code>const grammar = calyx.grammar({
-"start": ["One", "Two", "Three"]
+  start: "{greeting} world.",
+  greeting: ["Hello", "Hi", "Hey", "Yo"]
 });
 
 grammar.generate()</code></pre>
     </example-script>
     <example-script label="JSON" selected>
-      <pre>
-        <code>{
-          "start": ["One", "Two", "Three"]
-        }
-        </code>
-      </pre>
+      <pre><code>{
+  "start": "{greeting} world.",
+  "greeting": ["Hello", "Hi", "Hey", "Yo"]
+}</code></pre>
     </example-script>
   </example-console>
 </main>

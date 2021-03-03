@@ -2,101 +2,15 @@ body {
   font-family: "Libre Franklin", sans-serif;
 }
 
-/* example-script:not([selected]) {
+/*
+  Avoids flash of unstyled content when light DOM markup is rendered as-is
+  before the live component mounts to the custom element.
+ */
+example-script:not(:defined) {
   display: none;
-} */
+}
 
 main {
-  margin: 0 auto;
+  margin: 200px auto;
   width: 60%;
-}
-
-.example {
-  width: 100%;
-  background-color: #ddd;
-  display: flex;
-}
-
-.example-container {
-  width: 60%;
-}
-
-.example-output {
-  width: 40%;
-  border-left: 1px solid #ccc;
-}
-
-.example-tabs {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-}
-
-.example-tabs li {
-  font-weight: bold;
-  margin: 0;
-}
-
-.example-tabs li button {
-  display: inline-block;
-  border: none;
-  margin: 0;
-  padding: 2px 6px;
-  background-color: #bbb;
-  font-size: 100%;
-}
-
-.example-tabs li button:hover {
-  background-color: #aaa;
-}
-
-.example-header {
-  background-color: #bbb;
-}
-
-.example-footer {
-  background-color: #ccc;
-}
-
-.example-output .example-tabs {
-  justify-content: flex-end;
-}
-
-.example-ready {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.example-run {
-  border: none;
-  background-color: transparent;
-}
-
-.example-run:hover {
-  cursor: pointer;
-}
-
-.example-run:hover .stroke-solid {
-  stroke: #aaa;
-}
-
-.example-run:hover .icon {
-  fill: #bbb;
-}
-
-.example-result {
-}
-
-.stroke-solid {
-  stroke-width: 4px;
-}
-
-.example-code[aria-selected=true] {
-  display: block;
-}
-
-.example-code[aria-selected=false] {
-  display: none;
 }
