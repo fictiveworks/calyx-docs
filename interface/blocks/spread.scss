@@ -1,22 +1,25 @@
+@use "foundation/scale";
+@use "foundation/color";
+
 .spread {
   //height: 100vh;
   display: flex;
   align-items: center;
-  padding: $scale-p3 $scale-p3 $scale-p2 $scale-p3;
+  padding: scale.$p3 scale.$p3 scale.$p2 scale.$p3;
   //justify-content: center;
 
   &.spread-hero {
-    background-color: $color-eucalyptus;
-    color: $color-white;
+    background-color: color.$eucalyptus;
+    color: color.$white;
   }
 
   &.spread-intro {
     p {
-      font-size: $scale-p0;
+      font-size: scale.$p0;
       font-weight: 700;
-      color: $color-stromboli;
-      padding-bottom: $scale-p0;
-      border-bottom: $scale-m4 solid $color-stromboli;
+      color: color.$stromboli;
+      padding-bottom: scale.$p0;
+      border-bottom: scale.$m4 solid color.$stromboli;
     }
   }
 
@@ -47,8 +50,8 @@
     width: 60%;
 
     h2 {
-      margin-bottom: $scale-p1;
-      font-size: $scale-p2;
+      margin-bottom: scale.$p1;
+      font-size: scale.$p2;
       line-height: 1.2;
     }
   }

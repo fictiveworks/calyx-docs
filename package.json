@@ -6,7 +6,9 @@
     "build:calyx": "jsdoc packages/calyx-js/ -r packages/calyx-js/README.md -t templates/jsdoc",
     "build:mementus": "jsdoc packages/mementus-js/ -r packages/mementus-js/README.md -t templates/jsdoc",
     "start:ui": "snowpack dev",
-    "build:ui": "snowpack build"
+    "build:ui": "snowpack build",
+    "build": "npm run build:sass",
+    "build:sass": "sass --load-path=interface interface/calyx.scss www/calyx/ui/calyx.css"
   },
   "author": "Mark Rickerby <me@maetl.net> (https://maetl.net)",
   "license": "MIT",
@@ -15,6 +17,7 @@
   },
   "devDependencies": {
     "jsdoc": "^3.6.5",
+    "sass": "^1.32.8",
     "snowpack": "^2.18.5"
   }
 }

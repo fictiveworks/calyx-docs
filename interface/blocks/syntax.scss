@@ -1,8 +1,10 @@
+@use "foundation/color";
+
 $color-syntax-comment: #aaa;
 $color-syntax-background: darken(#5F7A6D, 18%);
 $color-syntax-literal: #eee;
 $color-syntax-operator: #FA8676;
-$color-syntax-keyword: $color-aquamarine;
+$color-syntax-keyword: color.$aquamarine;
 $color-syntax-string: #C2FBE0;
 
 .highlight .hll { background-color: $color-syntax-background; }
