@@ -1,4 +1,5 @@
 source "https://rubygems.org"
 
+gem "tty-prompt"
 gem "yard"
-gem "yarrow", git: "https://github.com/maetl/yarrow"
+gem "yarrow", "0.6.1"

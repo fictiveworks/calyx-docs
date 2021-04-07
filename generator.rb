@@ -2,8 +2,9 @@ require "kramdown"
 require "mustache"
 require "fileutils"
 require "yarrow"
+require "./document"
 
-p Yarrow::Content.constants
+#p Yarrow::Content.constants
 
 module Yarrow
   module Content
@@ -37,7 +38,6 @@ module Yarrow
   end
 end
 
-
 WEB_DIR = "./www"
 CONTENT_DIR = ""
 TEMPLATE_DIR = "./templates/yarrow"
@@ -50,13 +50,14 @@ Mustache.template_path = "#{TEMPLATE_DIR}/partials"
 Mustache.template_extension = "html"
 
 INDEXES = {}
+EXAMPLES = {}
 
 def build_document(source_path)
   doc_title, target_doc = parse_document(source_path)
   target_path = "#{WEB_DIR}/#{source_path.gsub('.md', '.html')}"
   target_dir = File.dirname(target_path)
   FileUtils.mkdir_p(target_dir) unless File.directory?(target_dir)
-  File.write(target_path, render_document(doc_title, target_doc))
+  File.write(target_path, render_document(doc_title, target_doc.to_html))
   append_index(target_path, doc_title)
 end
 
@@ -80,8 +81,15 @@ end
 def parse_document(source_path)
   source = File.read(source_path)
   title = extract_title(source.lines.first)
-  content = Kramdown::Document.new(source, input: "GFM", syntax_highlighter: "rouge").to_html
-  [title, content]
+
+  parsed_doc = Extensions::Document.new(source_path, source)
+
+  if parsed_doc.has_js?
+    File.write("./first-example.js", parsed_doc.to_js)
+    p parsed_doc.to_js
+  end
+
+  [title, parsed_doc]
 end
 
 def extract_title(first_line)

@@ -13,6 +13,17 @@
 import { html, render, nothing } from 'https://unpkg.com/lit-html/lit-html.js';
 import { component, useState, useReducer, useEffect } from 'https://unpkg.com/haunted/haunted.js';
 
+function contextfreeexpansion(action) {
+const g = calyx.grammar({
+  start: "{animal} {verb}.",
+  animal: ["Snowball", "Santa’s Little Helper"],
+  verb: ["chases", "licks", "bites"]
+})
+
+return g.generate()
+
+}
+
 function ExampleReady(runExample) {
   return html`<div class="example-ready">
     <button class="example-run" @click=${runExample}>
@@ -66,7 +77,7 @@ function outputReducer(state, action) {
 }
 
 function ExampleInspector(result) {
-  //const nodes = Array.isArray(result) ? 
+  //const nodes = Array.isArray(result) ?
 
   return html`
     <ul class="example-object">
@@ -112,11 +123,12 @@ function ExampleConsole({ name }) {
   const exampleTabs = exampleScripts.map(el => el.getAttribute("label"));
 
   const runExample = () => {
-    const grammar = calyx.grammar({
-      start: "{greeting} world",
-      greeting: ["Hello", "Hi", "Hey", "Yo"]
-    });
-    const result = grammar.generate();
+    // const grammar = calyx.grammar({
+    //   start: "{greeting} world",
+    //   greeting: ["Hello", "Hi", "Hey", "Yo"]
+    // });
+    // const result = grammar.generate();
+    const result = contextfreeexpansion();
     dispatch({ type: "run", result });
   }
 

@@ -17,10 +17,10 @@ When the subject of a sentence varies by person, the verb must follow:
 
 When the antecedent of a sentence has a defined or implied gender, any following pronouns must match that gender:
 
-- Michael collects her data (she has a lot)
-- Stamets collects his data (he has a lot)
-- Adira collects their data (they have a lot)
-- The Sphere collects its data (it has a lot)
+- Michael reviews her data (she has a lot)
+- Stamets reviews his data (he has a lot)
+- Adira reviews their data (they have a lot)
+- The Sphere reviews its data (it has a lot)
 
 ## Number
 
@@ -47,25 +47,39 @@ Expanding a context-free grammar gives a result where none of the chosen parts h
 
 In following example, we pick from a list of nouns (Snowball, Santa’s Little Helper) and a list of verbs (chases, licks, bites) which are entirely independent.
 
-<example-console>
+<example-console id="context-free-expansion">
 
 <example-code markdown="block" label="ruby" tab="ruby" selected="true">
 ```ruby
-Calyx::Grammar.new do
+g = Calyx::Grammar.new do
   start "{animal} {verb}."
   animal "Snowball", "Santa’s Little Helper"
   verb "chases", "licks", "bites"
 end
+
+g.generate
 ```
 </example-code>
 
-<example-code markdown="block" label="javascript" tab="javascript" selected="false">
+<example-code markdown="block" label="javascript" tab="javascript" selected="false" runnable>
 ```javascript
-calyx.grammar({
-  start: "{animal} {verb}."
-  animal: ["Snowball", "Santa’s Little Helper"]
+const g = calyx.grammar({
+  start: "{animal} {verb}.",
+  animal: ["Snowball", "Santa’s Little Helper"],
   verb: ["chases", "licks", "bites"]
 })
+
+g.generate()
+```
+</example-code>
+
+<example-code markdown="block" label="json">
+```json
+{
+  "start": "{animal} {verb}.",
+  "animal": ["Snowball", "Santa’s Little Helper"],
+  "verb": ["chases", "licks", "bites"]
+}
 ```
 </example-code>
 
@@ -133,7 +147,7 @@ Despite these drawbacks, there are situations where branching is a good pattern 
 - When you have a small and well-defined set of nouns to draw from
 - When you have a small set of crafted sentence variations
 - When flexibility or adaptability isn’t important
-- When you want your generator to be directly transferable to other tools and languages (eg: Tracery)
+- When you want your generator to be easier to port to alternative tools and languages (eg: Tracery)
 
 ## Mappings and Memos
 
@@ -177,4 +191,41 @@ grammar = Calyx::Grammar.new do
   verb "chases", "licks", "bites"
   appendage "tail", "paw"
 end
+```
+
+## Inflections with custom modifiers
+
+An alternative to crafting agreement and inflection rules into the structure of the grammar is to extend the expression syntax with custom modifier functions and manually handle the string transformations to get your desired result.
+
+In templating, this is commonly referred to as an ‘escape hatch’, allowing you to drop out of the declarative DSL and gain access to the full capabilities of the host programming language.
+
+```ruby
+module PosessiveNouns
+  def posessive(noun)
+    case noun
+    when "Santa’s Little Helper" then "his"
+    when "Snowball" then "her"
+    else
+      "their"
+    end
+  end
+end
+
+PosessiveGrammar.include_modifier(PosessiveNouns)
+
+grammar = PosessiveGrammar.new do
+  start "{@animal} {verb} {@animal.posessive} {appendage}"
+  animal "Snowball", "Santa’s Little Helper"
+  verb "chases", "licks", "bites"
+  appendage "tail", "paw"
+end
+```
+
+```js
+calyx.grammar({
+  start: "{@animal} {verb} {@animal.posessive} {appendage}",
+  animal: ["Snowball", "Santa’s Little Helper"],
+  verb: ["chases", "licks", "bites"],
+  appendage: ["tail", "paw"]
+})
 ```

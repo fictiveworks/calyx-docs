@@ -1,8 +1,46 @@
-GIT
-  remote: https://github.com/maetl/yarrow
-  revision: 62b6d21489f3adfc400218a1e59b6c1c2aa3c937
+GEM
+  remote: https://rubygems.org/
   specs:
-    yarrow (0.5.1)
+    activesupport (5.2.4.5)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (>= 0.7, < 2)
+      minitest (~> 5.1)
+      tzinfo (~> 1.1)
+    concurrent-ruby (1.1.8)
+    em-websocket (0.5.2)
+      eventmachine (>= 0.12.9)
+      http_parser.rb (~> 0.6.0)
+    eventmachine (1.2.7)
+    hashie (3.6.0)
+    http_parser.rb (0.6.0)
+    i18n (1.8.9)
+      concurrent-ruby (~> 1.0)
+    mementus (0.8.3)
+    minitest (5.14.4)
+    pastel (0.8.0)
+      tty-color (~> 0.5)
+    rack (2.2.3)
+    rack-livereload (0.3.17)
+      rack
+    sprockets (3.7.2)
+      concurrent-ruby (~> 1.0)
+      rack (> 1, < 3)
+    thread_safe (0.3.6)
+    tty-color (0.6.0)
+    tty-cursor (0.7.1)
+    tty-prompt (0.23.0)
+      pastel (~> 0.8)
+      tty-reader (~> 0.8)
+    tty-reader (0.9.0)
+      tty-cursor (~> 0.7)
+      tty-screen (~> 0.8)
+      wisper (~> 2.0)
+    tty-screen (0.8.1)
+    tzinfo (1.2.9)
+      thread_safe (~> 0.1)
+    wisper (2.0.1)
+    yard (0.9.25)
+    yarrow (0.6.1)
       activesupport (~> 5.1)
       em-websocket (~> 0.5.1)
       eventmachine (~> 1.2)
@@ -12,42 +50,13 @@ GIT
       rack-livereload (~> 0.3)
       sprockets (~> 3.7)
 
-GEM
-  remote: https://rubygems.org/
-  specs:
-    activesupport (5.2.4.4)
-      concurrent-ruby (~> 1.0, >= 1.0.2)
-      i18n (>= 0.7, < 2)
-      minitest (~> 5.1)
-      tzinfo (~> 1.1)
-    concurrent-ruby (1.1.7)
-    em-websocket (0.5.2)
-      eventmachine (>= 0.12.9)
-      http_parser.rb (~> 0.6.0)
-    eventmachine (1.2.7)
-    hashie (3.6.0)
-    http_parser.rb (0.6.0)
-    i18n (1.8.5)
-      concurrent-ruby (~> 1.0)
-    mementus (0.8.3)
-    minitest (5.14.2)
-    rack (2.2.3)
-    rack-livereload (0.3.17)
-      rack
-    sprockets (3.7.2)
-      concurrent-ruby (~> 1.0)
-      rack (> 1, < 3)
-    thread_safe (0.3.6)
-    tzinfo (1.2.8)
-      thread_safe (~> 0.1)
-    yard (0.9.25)
-
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  tty-prompt
   yard
-  yarrow!
+  yarrow (= 0.6.1)
 
 BUNDLED WITH
    2.1.4
