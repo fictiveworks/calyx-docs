@@ -4,40 +4,6 @@ require "fileutils"
 require "yarrow"
 require "./document"
 
-#p Yarrow::Content.constants
-
-module Yarrow
-  module Content
-    class Graph
-      def self.from_dir_source(config)
-        instance = new(SourceCollector.collect(config.input_dir), config)
-        instance.expand_all
-        instance
-      end
-
-      # makey public
-      def initialize(graph, config)
-        @graph = graph
-        @config = config
-      end
-
-      # use default content types
-      def expand_all
-        #expander = CollectionExpander.new
-        #expander.expand(@graph)
-      end
-    end
-
-    # class Source
-    #   attr_reader :input_dir
-    #
-    #   def initialize(config)
-    #     @input_dir = config[:input_dir]
-    #   end
-    # end
-  end
-end
-
 WEB_DIR = "./www"
 CONTENT_DIR = ""
 TEMPLATE_DIR = "./templates/yarrow"
@@ -57,7 +23,7 @@ def build_document(source_path)
   target_path = "#{WEB_DIR}/#{source_path.gsub('.md', '.html')}"
   target_dir = File.dirname(target_path)
   FileUtils.mkdir_p(target_dir) unless File.directory?(target_dir)
-  File.write(target_path, render_document(doc_title, target_doc.to_html))
+  File.write(target_path, render_document(doc_title, target_doc))
   append_index(target_path, doc_title)
 end
 
@@ -81,13 +47,7 @@ end
 def parse_document(source_path)
   source = File.read(source_path)
   title = extract_title(source.lines.first)
-
   parsed_doc = Extensions::Document.new(source_path, source)
-
-  if parsed_doc.has_js?
-    File.write("./first-example.js", parsed_doc.to_js)
-    p parsed_doc.to_js
-  end
 
   [title, parsed_doc]
 end
@@ -97,8 +57,12 @@ def extract_title(first_line)
   first_line.split("# ").last
 end
 
-def render_document(title, content)
-  Mustache.render(File.read(DOCUMENT_TPL), {title: title, content: content})
+def render_document(title, document)
+  Mustache.render(File.read(DOCUMENT_TPL), {
+    title: title,
+    content: document.to_html,
+    script: document.to_js
+  })
 end
 
 def render_index(title, listing)
@@ -107,11 +71,6 @@ end
 
 def generate_site
   entries = Dir["./projects/calyx/**/*.md"].sort
-
-  #source = Yarrow::Content::Source.new(input_dir: "./projects/calyx/")
-  #content = Yarrow::Content::Graph.from_dir_source(source)
-
-  #p content
 
   entries.each do |path|
     build_document(path)

@@ -1,21 +1,8 @@
+$LOAD_PATH.unshift File.expand_path('./lib', __dir__)
+
 require "yarrow"
 require "yard"
-require "./generator"
-
-task :dev_server do
-  class DevServer < Yarrow::Server
-    def config
-      Yarrow::Configuration.new(output_dir: "./www", server: {
-        port: 4200,
-        host: "localhost",
-        handler: "webrick"
-      })
-    end
-  end
-
-  server = DevServer.new
-  server.run
-end
+require "generator"
 
 task :fictive do
   fictive_path = "~/Projects/fictive/fictive-editor"
@@ -64,47 +51,4 @@ end
 
 task :mementus_css do
   sh ""
-end
-
-namespace :install do
-  task :config do
-
-  end
-
-  task :sites do
-    require "tty-prompt"
-
-    prompt = TTY::Prompt.new
-
-    pwdtext = File.basename(File.dirname(__FILE__))
-    default_domain = "https://#{pwdtext.downcase}#{[".org", ".website"].sample}"
-    default_title = pwdtext.capitalize
-    default_name = pwdtext.downcase
-    default_author = ENV["USER"]
-    # default_source_dir = "#{File.dirname(__FILE__)}/content"
-    # default_output_dir = "#{File.dirname(__FILE__)}/web"
-
-    domain = prompt.ask("Domain (public URL)", default: default_domain) do |q|
-      q.convert(:uri)
-    end
-    title = prompt.ask("Title (main h1)", default: default_title)
-    name = prompt.ask("Name (short text identifier)", default: default_name)
-    author = prompt.ask("Author Name", default: default_author)
-    email = prompt.ask("Author Email", default: "webmaster@#{domain.host}")
-    # source_dir = prompt.ask("Source Directory", default: default_source_dir)
-    # output_dir = prompt.ask("Output Directory", default: default_output_dir)
-
-    #launched_at = prompt.ask("Launched At (documented launch date)")
-
-    Site = Yarrow::Schema::Value.new(:domain, :title, :name, :author, :email)
-
-    site = Site.new(domain, title, name, author, email)
-
-    p site
-  end
-
-  task :www do
-    sh "mkdir -p www/calyx/ui"
-    sh "mkdir -p www/mementus/ui"
-  end
 end
