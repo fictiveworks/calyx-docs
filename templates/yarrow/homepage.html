@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Supertrash Docs</title>
+  <link rel="stylesheet" type="text/css" href="/documentation.css">
+</head>
+<body>
+  <header class="topbar spot">
+    <div class="logo">
+      <img src="/logo.svg" alt="Supertrash logo">
+    </div>
+    <nav class="document-nav">
+      <!-- <ul>
+        <li><a href="/domain">Domain Model</a></li>
+        <li><a href="/runbook">Runbook</a></li>
+        <li><a href="/styleguide">Styleguide</a></li>
+      </ul> -->
+    </nav>
+  </header>
+  <div class="document-layout">
+    <aside class="sidebar">
+      <nav class="menu">
+        <ul>
+          <li><a href="{{ post.url }}">{{ post.data.title }}</a></li>
+        </ul>
+      </nav>
+    </aside>
+    <main class="document-page">
+      <h1>{{ title }} ({{ context }}.{{ id }})</h1>
+      <h2>{{ summary }}</h2>
+      {{ content }}
+    </main>
+  </div>
+  <footer class="document-footer">
+    <p>&copy; Supertrash 2019–2020.</p>
+  </footer>
+</body>
+</html>

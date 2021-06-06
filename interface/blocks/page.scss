@@ -1,0 +1,16 @@
+@use "foundation/color";
+
+.page {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr 2fr);
+  //grid-template-columns: repeat(8, 1fr 2fr);
+
+  .sidebar {
+    background-color: color.$sidebar-background;
+    grid-column: 1 / 4;
+  }
+
+  .document {
+    grid-column: 5 / 14;
+  }
+}

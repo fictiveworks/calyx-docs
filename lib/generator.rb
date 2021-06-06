@@ -18,9 +18,14 @@ Mustache.template_extension = "html"
 INDEXES = {}
 EXAMPLES = {}
 
+def target_source_path(source_path)
+  target_path = source_path.gsub('.md', '.html').gsub("projects/calyx", "calyx")
+  "#{WEB_DIR}/#{target_path}"
+end
+
 def build_document(source_path)
   doc_title, target_doc = parse_document(source_path)
-  target_path = "#{WEB_DIR}/#{source_path.gsub('.md', '.html')}"
+  target_path = target_source_path(source_path)
   target_dir = File.dirname(target_path)
   FileUtils.mkdir_p(target_dir) unless File.directory?(target_dir)
   File.write(target_path, render_document(doc_title, target_doc))
@@ -30,7 +35,7 @@ end
 def append_index(path, title)
   dir_key = File.dirname(path)
   INDEXES[dir_key] = [] unless INDEXES.key?(dir_key)
-  INDEXES[dir_key] << { title: title, url: path.gsub("#{WEB_DIR}/.", "") }
+  INDEXES[dir_key] << { title: title, url: target_source_path(path.gsub("#{WEB_DIR}/.", "")) }
 end
 
 def write_indexes
@@ -40,7 +45,7 @@ def write_indexes
     File.write(index_path, render_index(index_title, listing))
   end
 
-  homepage_path = "#{WEB_DIR}/index.html"
+  homepage_path = "#{WEB_DIR}/calyx/index.html"
   File.write(homepage_path, Mustache.render(File.read(HOME_TPL)))
 end
 

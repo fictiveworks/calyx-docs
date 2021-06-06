@@ -5,3 +5,6 @@ out/
 node_modules/
 packages/
 build/
+www/
+oldsite/
+design/

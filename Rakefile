@@ -16,6 +16,10 @@ task :packages do
   sh "git clone https://github.com/fictiveworks/mementus packages/mementus-js"
 end
 
+task :serve do
+  sh "cd www/calyx ; ruby ~/Projects/local-scripts/server.rb"
+end
+
 task :build do
   generate_site
 end

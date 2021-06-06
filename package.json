@@ -3,8 +3,8 @@
   "private": true,
   "description": "Documentation monorepo for Fictive Works projects",
   "scripts": {
-    "build:calyx": "jsdoc packages/calyx-js/ -r packages/calyx-js/README.md -t templates/jsdoc",
-    "build:mementus": "jsdoc packages/mementus-js/ -r packages/mementus-js/README.md -t templates/jsdoc",
+    "doc:calyx": "jsdoc packages/calyx-js/ -r packages/calyx-js/README.md -t templates/jsdoc",
+    "doc:mementus": "jsdoc packages/mementus-js/ -r packages/mementus-js/README.md -t templates/jsdoc",
     "start:ui": "snowpack dev",
     "build:ui": "snowpack build",
     "build": "npm run build:sass",

@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Calyx Docs</title>
+  <link rel="stylesheet" type="text/css" href="/ui/calyx.css">
+  <script type="module" src="/ui/bundle.js"></script>
+</head>
+<body>
+  {{> navbar }}
+  <div class="pagebar">
+    <ul class="breadcrumbs">
+      <li><a href="/">Calyx</a></li>
+      <li><a href="/recipes/">Recipes</a></li>
+    </ul>
+    <h1>{{ title }}</h1>
+  </div>
+  <main class="page">
+    <aside class="sidebar">
+      <nav class="menu">
+        <ul>
+          <li><a href="{{ post.url }}">{{ post.data.title }}</a></li>
+        </ul>
+      </nav>
+    </aside>
+    <article class="document">
+      {{{content}}}
+    </article>
+  </main>
+  <footer class="document-footer">
+    <p>&copy; fictive.works 2020</p>
+  </footer>
+{{#script}}
+<script type="module">
+{{{script}}}
+</script>
+{{/script}}
+</body>
+</html>
