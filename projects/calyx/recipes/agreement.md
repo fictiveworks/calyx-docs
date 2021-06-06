@@ -1,12 +1,12 @@
 # Agreement
 
-In this lesson, we will look at how different features of Calyx support adaptive and flexible generation of sentences from varying sets of nouns and verbs that can handle the assiduous work of correctly matching each part to an expected gramatical category.
+Grammatical agreement has a tendency to confound automated text generation. There are sometimes extra steps required to get all parts of a sentence to agree.
 
-Grammatical agreement has a tendency to confound automated text generation and there are sometimes extra steps required to get all parts of a sentence to agree.
+Here, we’ll explore different ways to generate English sentences using Calyx by handling the assiduous work of correctly matching varying sets of nouns and verbs to expected gramatical categories.
 
 ## What is gramatical agreement?
 
-English is not a hugely complicated language when it comes to inflection and declension patterns but it does have several categories we have to pay attention to.
+English is not the most complicated language when it comes to inflection and declension patterns but it does have several categories we have to pay close attention to in writing.
 
 ## Person
 
@@ -43,15 +43,17 @@ Determiners also have their own specific singular and plural forms:
 - That robot
 - Those robots
 
-We don’t need to think about these categories consciously when we’re writing. We know what sounds right. But we do need to think about this connective tissue when we build up word and phrase lists for a grammar.
+## Working from examples
 
-Doing a bit of planning, sketching out the texture and the designed structure of what you want to generate, paying attention to the detail of of embedding key words in multiple places in the text is well worth doing on larger projects. Having a good understanding off all this makes it easier to quickly write fragments that snaplock into whole sentences, avoiding undeliberated juxtapositions that don’t scan well at a glance.
+We don’t often need to think about these categories consciously when we’re writing. We know what sounds right. But we sometimes need to think about this connective tissue when we build up word and phrase lists for generating sentences and want to avoid undeliberated juxtapositions that break grammatical rules.
+
+A little bit of planning goes a long way here, especially on larger projects. Sketching out examples of the desired textures and phrase structures to generate makes it easier to write new fragments that snaplock into whole sentences and scan well at a glance.
 
 ## Context-free expansion
 
 Expanding a context-free grammar gives a result where none of the chosen parts have any relationship to one another.
 
-In following example, we pick from a list of nouns (Snowball, Santa’s Little Helper) and a list of verbs (chases, licks, bites) which are entirely independent.
+In following example, we pick from a list of nouns *Snowball*, *Santa’s Little Helper* and a list of verbs *chases*, *licks*, *bites* which are selected independently when the grammar runs.
 
 <example-console id="context-free-expansion">
 
@@ -188,62 +190,24 @@ const catNMouse = grammar({
 catNMouse.generate()
 ```
 
-Now we’ve rewritten the grammar with separate masculine and feminine branches that draw from different sets of productions. It’s more flexible and easier to update the lists of nouns but the trade-off is obvious at a glance: the grammar is now much more intricate and abstract.
+Now we’ve rewritten the grammar with separate masculine and feminine branches that draw from different sets of productions. It’s more flexible and easier to update the lists of nouns but the trade-off stands out at a glance: the grammar is now much more intricate and abstract.
 
-Not only is it difficult to read, it also places a lot more emphasis on the so-called hardest problem of naming things, often a source of decision fatigue and disagreement. Taking this further would mean going down the path of symbolically encoding rules of English grammar in fragments that aren’t reusable outside any one specific example.
+Not only is it difficult to read, it also places a lot more emphasis on the so-called hardest problem of naming things, often a source of decision fatigue and disagreement. Taking this further would mean going down the path of symbolically encoding rules of English grammar in fragments that aren’t reusable outside this one specific example.
 
 Despite these drawbacks, there are situations where branching is a good pattern to use. Consider this approach under the following circumstances:
 
 - When you have a small and well-defined set of nouns to draw from
 - When you have a small set of crafted sentence variations
 - When flexibility or adaptability isn’t important
-- When you might want to treat the code as data and convert it to other formats in future
+- When you want to make shared libraries and systems of grammars for a large project
 
-## Mappings and Memos
+## Modifiers as an escape hatch
 
 If we want to avoid repetitive branching, we need to go beyond the constraints of context-free expansion.
 
-Mappings allow you to transform strings from one set into strings from another. They are declared as named rules in the grammar but require a rule symbol to be provided as an argument.
+An alternative to crafting agreement and inflection rules into the structure of the grammar is to extend the expression syntax with custom modifier functions and manually handle the string transformations in code to get the desired result.
 
-Memos are one of the primary features Calyx provides to make this process easier. Prefixing an expression with the `@` sigil allows multiple references in the grammar to point to the same choice rather than picking a different branch each time.
-
-```ruby
-grammar = Calyx::Grammar.new do
-  filter :posessive do |noun|
-    case noun
-    when "Santa’s Little Helper" then "his"
-    when "Snowball" then "her"
-    else
-      "their"
-    end
-  end
-
-  mapping :pronoun, {
-    /Snowball/ => "her",
-    /Santa/ => "his"
-  }
-
-  start "{@animal} {verb} {@animal.posessive} {appendage}"
-  animal "Snowball", "Santa’s Little Helper"
-  verb "chases", "licks", "bites"
-  appendage "tail", "paw"
-end
-```
-
-```ruby
-grammar = Calyx::Grammar.new do
-  start "{@animal} {verb} {@animal} {appendage}"
-  animal "Snowball", "Santa’s Little Helper"
-  snowball "her"
-  rule("Santa’s Little Helper", ["his"])
-  verb "chases", "licks", "bites"
-  appendage "tail", "paw"
-end
-```
-
-## Inflections with custom modifiers
-
-An alternative to crafting agreement and inflection rules into the structure of the grammar is to extend the expression syntax with custom modifier functions and manually handle the string transformations in code to get your desired result.
+Prefixing an expression with the `@` sigil allows multiple references in the grammar to point to the same choice rather than picking a different branch each time, which is how we get consistent agreement between the names and posessives.
 
 ```ruby
 module PosessiveNouns
@@ -257,7 +221,7 @@ module PosessiveNouns
   end
 end
 
-Calyx::Grammar.embed_modifiers(PosessiveNouns)
+Calyx::Grammar.register_modifiers(PosessiveNouns)
 
 cat_n_mouse = Calyx::Grammar.new do
   start "{@animal} {verb} {@animal.posessive} {appendage}"
@@ -268,18 +232,17 @@ end
 ```
 
 ```js
+import { registerModifier, grammar } from "calyx";
 
-const posessiveNouns = {
-  possessive: noun => {
-    switch(noun) {
-      case "Snowball": return "her"
-      case "Santa’s Little Helper": return "his"
-      default: return "their"
-    }
+function posessive(noun) {
+  switch(noun) {
+    case "Snowball": return "her"
+    case "Santa’s Little Helper": return "his"
+    default: return "their"
   }
 }
 
-calyx.embedModifiers(posessiveNouns)
+registerModifiers({posessive})
 
 calyx.grammar({
   start: "{@animal} {verb} {@animal.posessive} {appendage}",
@@ -291,9 +254,16 @@ calyx.grammar({
 calyx.generate()
 ```
 
-## Mapping Dictionaries
+People will have different opinions on the trade-off of simplicity and indirection here. The grammar itself is compact and readable but relies on special-case string modifiers which can’t be exported to JSON or embedded in cross-platform environments.
 
-Because this sort of mapping from one to the other is a fairly common thing to do, Calyx provides a shortcut in the form of map productions that can be applied as a lookup table of modifiers after a generated symbol.
+Consider this pattern:
+
+- When your project is self-contained and you don’t plan to export to other engines
+- When you want to use 3rd party linguistics or formatting APIs (links to recommended libraries here soon)
+
+## Look it up in the dictionary
+
+Handling this mapping from one to the other is a recurring problem when making large grammars, so Calyx provides a shortcut for adding paired lookups in the grammar directly.
 
 Here, the `{@animal>posessive}` substitution inflects the output of the memoized `animal` rule using the lookup table declared in `posessive`.
 
