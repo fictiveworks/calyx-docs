@@ -135,8 +135,6 @@ const catAndMouse = grammar({
 catAndMouse.generate()
 ```
 
-
-
 Here, we expect Snowball to always be matched with feminine inflections and Santa’s Little Helper to be matched with masculine inflections but that isn’t what we get. Each time we expand to a result, a different inflection will be assigned.
 
 ## Crafting consistent branches
@@ -184,22 +182,20 @@ const catNMouse = grammar({
   m_phrase: "{m_animal} {verb} {m_posessive} {appendage}",
   m_posessive: "his",
   verb: ["chases", "licks", "bites"],
-  appendage ["tail", "paw"]
+  appendage: ["tail", "paw"]
 })
 
 catNMouse.generate()
 ```
 
-Now we’ve rewritten the grammar with separate masculine and feminine branches that draw from different sets of productions. It’s more flexible and easier to update the lists of nouns but the trade-off stands out at a glance: the grammar is now much more intricate and abstract.
+Now we’ve rewritten the grammar with separate masculine and feminine branches that draw from different sets of productions. It’s more flexible and easier to update the lists of nouns but the trade-off stands out at a glance: our new grammar is much more intricate and abstract.
 
-Not only is it difficult to read, it also places a lot more emphasis on the so-called hardest problem of naming things, often a source of decision fatigue and disagreement. Taking this further would mean going down the path of symbolically encoding rules of English grammar in fragments that aren’t reusable outside this one specific example.
+It’s more difficult to read and places a lot more emphasis on precise naming of things, often a source of decision fatigue and disagreement on software projects. Taking this further would mean going down the path of symbolically encoding rules of English grammar in fragments that aren’t reusable outside this one specific example.
 
-Despite these drawbacks, there are situations where branching is a good pattern to use. Consider this approach under the following circumstances:
+Despite these drawbacks, there are situations where this kind of branching is a good pattern to use. Consider this approach with the following circumstances:
 
-- When you have a small and well-defined set of nouns to draw from
-- When you have a small set of crafted sentence variations
-- When flexibility or adaptability isn’t important
-- When you want to make shared libraries and systems of grammars for a large project
+- When you have a small set of crafted sentence templates to combine with a large corpus of verbs or nouns
+- When you want to export grammars for remixing and combining in other projects
 
 ## Modifiers as an escape hatch
 
@@ -265,7 +261,7 @@ Consider this pattern:
 
 Handling this mapping from one to the other is a recurring problem when making large grammars, so Calyx provides a shortcut for adding paired lookups in the grammar directly.
 
-Here, the `{@animal>posessive}` substitution inflects the output of the memoized `animal` rule using the lookup table declared in `posessive`.
+Here, the `{@animal>posessive}` shortcut inflects the output of the memoized `animal` rule using the lookup table declared in `posessive`.
 
 ```js
 calyx.grammar({
@@ -280,4 +276,4 @@ calyx.grammar({
 })
 ```
 
-Map substitutions are bidirectional. The direction of match to target can be changed between left to right and right to left by flipping the `<` and `>` applicators.
+Using Calyx’s syntax features like this results in a more abstract and compact grammar, with the tradeoff of having to get used to the custom syntax for map lookups.
