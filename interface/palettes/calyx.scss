@@ -1,0 +1,21 @@
+@use "foundation/color";
+
+:root {
+  --color-navbar-background: #{color.$color-green-8};
+  --color-nav-link-default: #{color.$color-green-2};
+  --color-nav-link-hover: #{color.$color-green-2};
+  --color-nav-background-hover: #{color.$color-green-7};
+  --color-pagebar-background-1: #{color.$color-green-7};
+  --color-pagebar-background-2: #{color.$color-green-5};
+  --color-pagebar-background-3: #{color.$color-green-3};
+  --color-pagebar-background-4: #{color.$color-green-1};
+  --color-pagebar-foreground: #{color.$color-green-1};
+  --color-menu-link-default: #{color.$color-green-7};
+  --color-menu-link-hover: #{color.$color-green-7};
+  --color-menu-link-background: #{color.$color-green-3};
+  --color-menu-active-background: #{color.$color-green-7};
+  --color-menu-active-default: #{color.$color-green-1};
+  --color-page-background: #{color.$color-green-1};
+  --color-document-border: #{color.$color-green-4};
+  --color-document-background: white;
+}

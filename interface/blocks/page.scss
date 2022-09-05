@@ -1,15 +1,26 @@
-@use "foundation/color";
+@use "foundation/scale";
 
 .page {
   display: grid;
-  grid-template-columns: repeat(8, 1fr 2fr);
+  grid-template-columns: 18vw auto 26vw;
+  background-color: var(--color-page-background);
 
-  .sidebar {
-    background-color: color.$sidebar-background;
+  .pagebar {
     grid-column: 1 / 4;
   }
 
+  .sidebar {
+    grid-row-start: 2;
+    grid-column: 1 / 2;
+  }
+
   .document {
-    grid-column: 5 / 13;
+    border-radius: 3px;
+    margin: scale.$p1;
+    padding: scale.$p1;
+    grid-row-start: 2;
+    border: 1px solid var(--color-document-border);
+    background-color: var(--color-document-background);
+    grid-column: 2 / 3;
   }
 }

@@ -1,12 +1,16 @@
 @use "foundation/scale";
-@use "foundation/color";
 
 $pagebar-height: (scale.$p2 + scale.$p1 + scale.$m2 + scale.$m3);
 
 .pagebar {
-  background-color: color.$eucalyptus;
-  height: $pagebar-height;
-  color: color.$white;
+  //background: radial-gradient(circle at left, var(--color-pagebar-background-1), var(--color-pagebar-background-2));
+  // background:
+  //   linear-gradient(var(--color-pagebar-background-1), var(--color-pagebar-background-2)),
+  //   radial-gradient(circle at right, var(--color-pagebar-background-3), var(--color-pagebar-background-4));
+  // background-blend-mode: multiply;
+  background: radial-gradient(circle at right, #D5F584, #23894C);
+  min-height: $pagebar-height;
+  color: var(--color-pagebar-foreground);
   padding: scale.$p0;
 
   .breadcrumbs {
@@ -17,6 +21,7 @@ $pagebar-height: (scale.$p2 + scale.$p1 + scale.$m2 + scale.$m3);
     li {
       margin-right: scale.$m2;
       font-size: scale.$m1;
+      font-weight: 500;
 
       &:not(:first-child) {
         &:before {
@@ -31,5 +36,24 @@ $pagebar-height: (scale.$p2 + scale.$p1 + scale.$m2 + scale.$m3);
     margin-top: scale.$m3;
     line-height: 1.2;
     font-size: scale.$p2;
+    font-weight: 900;
+    background: repeating-linear-gradient(
+      50deg,
+      #0A2E19 3px,
+      #23894C 10px,
+      #3DC569 4px
+    ),
+    repeating-linear-gradient(
+      -50deg,
+      #0A2E19 3px,
+      #23894C 10px,
+      #3DC569 4px
+    );
+    background-blend-mode: multiply;
+    opacity: 0.8;
+    display: inline-block;
+    //border-radius: 6px;
+    padding: scale.$m3 scale.$p1 0 scale.$m2;
+    //clip-path: polygon(0 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%);
   }
 }

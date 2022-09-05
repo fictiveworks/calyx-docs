@@ -1,0 +1,75 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.hero-spread {
+  width: 100vw;
+  height: 541px;
+  padding-top: 19px;
+  background: radial-gradient(circle at top, #D5F584, #23894C);
+  display: flex;
+  justify-content: space-around;
+}
+
+.hero-image {
+  margin-left: 38px;
+  display: block;
+  width: 520px;
+}
+
+.hero-lede {
+  align-self: center;
+  padding: 38px;
+}
+
+.hero-lede h1 {
+  font-size: 3em;
+  opacity: 0.9;
+  color: white;
+  font-family: 'Libre Franklin', sans-serif;
+  background: repeating-linear-gradient(
+    50deg,
+    #0A2E19 3px,
+    #23894C 10px,
+    #3DC569 4px
+  ),
+  repeating-linear-gradient(
+    -50deg,
+    #0A2E19 3px,
+    #23894C 10px,
+    #3DC569 4px
+  );
+  background-blend-mode: multiply;
+  opacity: 0.7;
+  display: inline-block;
+  border-radius: 6px;
+  padding: 0.3em;
+}
+
+.hero-lede a {
+  margin-top: 38px;
+  display: inline-block;
+  border-radius: 12px;
+  font-family: 'Libre Franklin', sans-serif;
+  font-size: 2em;
+  padding: 18px;
+  text-decoration: none;
+  color: #0A2E19;
+  background-color: #F0FDB9;
+  box-shadow: 6px 6px 0 #23894C;
+}
+
+.hero-lede a:hover {
+  color: #D5F684;
+  background-color: #0A2E19;
+  box-shadow: 6px 6px 0 #23894C;
+}
+
+.hero-lede a:active {
+  position: relative;
+  left: 6px;
+  top: 6px;
+  background-color: #0A2E19;
+  box-shadow: none;
+}

@@ -1,15 +1,15 @@
 @use "foundation/modifiers";
 @use "foundation/reset";
 
+@use "palettes/calyx";
+
 @use "blocks/typography";
-@use "blocks/grid";
+//@use "blocks/grid";
 @use "blocks/menu";
-@use "blocks/card";
-@use "blocks/cta";
+//@use "blocks/card";
+//@use "blocks/cta";
+@use "blocks/page";
 @use "blocks/navbar";
 @use "blocks/pagebar";
-@use "blocks/spread";
-@use "blocks/syntax";
-@use "blocks/page";
-
-@use "blocks/styleguide";
+// @use "blocks/spread";
+// @use "blocks/syntax";

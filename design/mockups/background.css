@@ -1,0 +1,25 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+
+.block {
+  width: 100vw;
+  height: 50vh;
+  background:
+  	repeating-linear-gradient(
+  		50deg,
+      #D5F584 1em,
+      #5AE55C 5em,
+      #3CC569 6em
+  	),
+  	repeating-linear-gradient(
+      -50deg,
+      #D5F584 1em,
+      #5AE55C 5em,
+      #3CC569 6em
+  	),
+    radial-gradient(circle at center, #D5F584, #23894C);
+
+    background-blend-mode: multiply;
+}
