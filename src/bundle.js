@@ -1,18 +1,14 @@
-import { ExampleConsole, ExampleCode } from "example-console";
+import calyx from "calyx";
+import "./components.js"
 
-customElements.define("example-console", ExampleConsole);
-customElements.define("example-code", ExampleCode);
+const hello = calyx.grammar({
+  start: "Hello {object}.",
+  object: ["world", "universe", "closure"]
+});
 
-// class ExampleConsole extends HTMLElement {
-//   constructor() {
-//     super();
-//
-//     this.attachShadow({ mode: 'open' });
-//
-//     this.shadowRoot.innerHTML = `
-//       <div class="example-box">
-//
-//       </div>
-//     `;
-//   }
-// }
+document.addEventListener("example-console:run", (ev) => {
+  if (ev.detail.id =="hello-world") {
+    const result = hello.generate();
+    ev.detail.run(result);
+  }
+});

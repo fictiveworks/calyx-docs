@@ -1,5 +1,4 @@
 {
-  "name": "fictive-documentation",
   "private": true,
   "description": "Documentation monorepo for Fictive Works projects",
   "scripts": {
@@ -14,7 +13,10 @@
   "author": "Mark Rickerby <me@maetl.net> (https://maetl.net)",
   "license": "MIT",
   "dependencies": {
-    "example-console": "file:///Users/maetl/Projects/fictive/example-console"
+    "calyx": "^0.17.0",
+    "example-console": "file:///Users/maetl/Projects/fictive/example-console",
+    "haunted": "^5.0.0",
+    "lit-html": "^2.3.1"
   },
   "devDependencies": {
     "jsdoc": "^3.6.5",
