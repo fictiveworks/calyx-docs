@@ -28,13 +28,35 @@ hello = Calyx::Grammar.new do
   start "Hello {object}."
   object "world", "universe", "closure"
 end
+
+hello.generate
 ```
 
 ```js
 const hello = calyx.grammar({
   start: "Hello {object}.",
   object: ["world", "universe", "closure"]
-});
+})
+
+hello.generate()
+```
+
+</example-console>
+
+## Another demo example
+
+This time with a different approach to a simple grammar.
+
+<example-console id="person-name">
+
+```javascript
+const people = calyx.grammar({
+  start: "{firstname} {lastname}",
+  firstname: ["Gonzo", "Jbob", "Helga", "Trubia", "Fuschia"],
+  lastname: ["Tweed", "Gilberenson", "Fullerine", "Tammwell", "Deltax"]
+})
+
+people.generate()
 ```
 
 </example-console>

@@ -29,41 +29,18 @@ LANG_LABELS = {
   "json" => JSON_LABEL
 }
 
-module Javascript
-  class CalyxFunction
-    attr_reader :name, :exports, :body
-
-    def initialize(name, body, exports=false)
-      @name = name
-      @lines = body.reject { |line| line.nil? }
-      @exports = exports
-    end
-
-    def to_s
-      "function #{name}(action) {\n#{gen_body}\n}\n"
-    end
-
-    def gen_body
-      # TODO: generate function return and handle console.log or print
-      #@lines[@lines.count - 1] = "return #{@lines.last}"
-      @lines.join("")
-    end
-  end
-end
-
 class ExampleConsole
-  attr_reader :id, :runnable
+  attr_reader :id, :name, :runnable
 
   def initialize(id, outer_el)
     @id = id
+    @name = id.gsub("-", "_")
     @outer_el = outer_el
     @runnable = collect_runnable(outer_el)
   end
 
   def to_js
-    binding = id.gsub("-", "")
-    js_callable = Javascript::CalyxFunction.new(binding, @runnable)
-    js_callable.to_s
+    "function #{name}(action) {\n#{gen_body(runnable)}\n}\n\n"
   end
 
   def create_tab_nav
@@ -78,20 +55,20 @@ class ExampleConsole
 
   private
 
+  def gen_body(body)
+    lines = body.split("\n")
+    result_ret = lines.last.lstrip
+    lines[lines.count - 1] = "return #{result_ret}"
+    lines.join("\n")
+  end
+
   RUNNABLE_LANGS = ["js", "javascript"]
 
   def collect_runnable(outer_el)
     outer_el.children.map do |inner_el|
       if RUNNABLE_LANGS.include?(inner_el.options[:lang])
-        #p inner_el.value
+        return inner_el.value
       end
-      # if inner_el.value == "example-code"
-      #   next unless inner_el.attr.key?("runnable")
-      #
-      #   inner_el.children.each do |inner_block|
-      #     return inner_block.value
-      #   end
-      # end
     end
   end
 end
@@ -126,7 +103,14 @@ module Extensions
     end
 
     def to_js
-      @custom_elements.map(&:to_js).join("\n\n")
+      bundle = ["const EXAMPLE_HANDLERS = {}"]
+
+      @custom_elements.each do |element|
+        bundle << element.to_js
+        bundle << "EXAMPLE_HANDLERS[\"#{element.id}\"] = #{element.name}"
+      end
+
+      bundle.join("\n\n")
     end
 
     def extract_custom_elements
