@@ -126,7 +126,7 @@ function ExampleConsole({ name }) {
       currentScript.style.display = "none";
       currentScript.removeAttribute("selected");
 
-      const nextScript = this.querySelector(`example-script[label=${selectedTab}]`);
+      const nextScript = this.querySelector(`example-script[label='${selectedTab}']`);
       nextScript.style.display = "block";
       nextScript.setAttribute("selected", "true");
     }
@@ -148,7 +148,6 @@ function ExampleConsole({ name }) {
   }
 
   const resetExample = () => dispatch({ type: "reset" });
-
   const stringMode = () => dispatch({ type: "mode", mode: "string" });
   const inspectMode = () => dispatch({ type: "mode", mode: "inspect" });
 
@@ -314,8 +313,10 @@ function ExampleConsole({ name }) {
     <div class="example-output">
       <header class="example-header">
         <ul class="example-tabs">
-          <li><button role="tab" @click=${stringMode} aria-selected>String</button></li>
-          <li><button role="tab" @click=${inspectMode}>Result</button></li>
+          ${!state.isReady ?
+            html`<li><button role="tab" @click=${stringMode} aria-selected>String</button></li>
+                 <li><button role="tab" @click=${inspectMode}>Result</button></li>`
+            : nothing}
         </ul>
       </header>
       ${state.isReady ? ExampleReady(runExample) : ExampleRun(state)}

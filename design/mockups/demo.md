@@ -26,7 +26,7 @@ An example of embedding a separate syntax highlighted code block in a document.
 ```ruby
 hello = Calyx::Grammar.new do
   start "Hello {object}."
-  object "world", "universe", "closure"
+  object "world", "universe", "planet"
 end
 
 hello.generate
@@ -35,10 +35,19 @@ hello.generate
 ```js
 const hello = calyx.grammar({
   start: "Hello {object}.",
-  object: ["world", "universe", "closure"]
+  object: ["world", "universe", "planet"]
 })
 
 hello.generate()
+```
+
+```cs
+Grammar hello = new Grammar(P => {
+  P.Start("Hello {object}");
+  P.Rule("object", new[] { "world", "universe", "planet"})
+});
+
+hello.Generate();
 ```
 
 </example-console>

@@ -6,7 +6,7 @@ const EXAMPLE_HANDLERS = {}
 function hello_world(action) {
 const hello = calyx.grammar({
   start: "Hello {object}.",
-  object: ["world", "universe", "closure"]
+  object: ["world", "universe", "planet"]
 })
 
 return hello.generate()
