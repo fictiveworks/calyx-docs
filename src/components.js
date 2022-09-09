@@ -102,7 +102,6 @@ function ExampleInspector(result) {
 }
 
 function ExampleRun(state) {
-  console.log(state)
   const markup = (state.mode == ResultView.STRING)
     ? html`<p class="example-text">${state.result.text}</p>`
     : html`<div class="example-inspector">${ExampleInspector(state.result)}</div>`;
@@ -136,13 +135,12 @@ function ExampleConsole({ name }) {
   const exampleTabs = exampleScripts.map(el => el.getAttribute("label"));
 
   const runExample = () => {
-    // dispatch({ type: "run", result });
     this.dispatchEvent(new CustomEvent("example-console:run", {
       bubbles: true,
       composed: true,
       detail: {
         run: (result) => dispatch({ type: "run", result }),
-        id: this.getAttribute("id")
+        name: this.getAttribute("id").replace("-", "_")
       }
     }));
   }
