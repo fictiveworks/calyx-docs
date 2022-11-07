@@ -1,31 +1,31 @@
-## Upper
+## uppercase
 
 ```
-{expansion.upper}
+{expansion.uppercase}
 ```
 
 Converts a template expansion to uppercase.
 
-## Lower
+## lowercase
 
 ```
-{expansion.lower}
+{expansion.lowercase}
 ```
 
 Converts a template expansion to lowercase.
 
-## Title
+## titlecase
 
 ```
-{expansion.title}
+{expansion.titlecase}
 ```
 
 Converts a template expansion to title case.
 
-## Sentence
+## sentencecase
 
 ```
-{expansion.sentence}
+{expansion.sentencecase}
 ```
 
 Converts a template expansion to sentence case.

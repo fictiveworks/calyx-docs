@@ -7,7 +7,7 @@
     "start:ui": "snowpack dev",
     "build:ui": "snowpack build",
     "build": "npm run build:sass",
-    "build:sass": "sass --load-path=interface interface/calyx.scss www/calyx/ui/calyx.css",
+    "build:sass": "sass --load-path=interface interface/calyx.scss docs/assets/calyx-docs.css",
     "build:design": "sass --load-path=interface interface/calyx.scss design/mockups/design.css"
   },
   "author": "Mark Rickerby <me@maetl.net> (https://maetl.net)",

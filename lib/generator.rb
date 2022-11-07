@@ -2,7 +2,7 @@ require "kramdown"
 require "mustache"
 require "fileutils"
 require "yarrow"
-require "./document"
+#require "document"
 
 WEB_DIR = "./www"
 CONTENT_DIR = ""
@@ -74,7 +74,7 @@ def render_index(title, listing)
   Mustache.render(File.read(INDEX_TPL), {title: title, listing: listing})
 end
 
-def generate_site
+def generate_site_old
   entries = Dir["./projects/calyx/**/*.md"].sort
 
   entries.each do |path|
@@ -84,4 +84,12 @@ def generate_site
   write_indexes
 
   #FileUtils.cp_r(".site/assets", "public")
+end
+
+require "yarrow"
+
+def generate_site
+  config = Yarrow::Configuration.load("Yarrowdoc")
+  generator = Yarrow::Generator.new(config)
+  generator.generate
 end

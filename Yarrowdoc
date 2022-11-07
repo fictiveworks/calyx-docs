@@ -1,0 +1,25 @@
+source_dir: projects/calyx
+output_dir: docs
+meta:
+  title: Calyx
+  author: Calyx Contributors
+content:
+  module: Calyx::Docs
+  source_map:
+    documents:
+      expansion: tree
+output:
+  generator: web
+  template_dir: templates/yarrow
+server:
+  live_reload: false
+  auto_index: true
+  default_index: index.html
+  default_type: text/plain
+  port: 5005
+  host: localhost
+  handler: webrick
+  middleware:
+    - Rack::ShowExceptions
+    - Rack::CommonLogger
+    - Rack::ContentLength

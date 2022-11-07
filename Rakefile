@@ -17,11 +17,12 @@ task :packages do
 end
 
 task :serve do
-  sh "cd www/calyx ; ruby ~/Projects/local-scripts/server.rb"
+  sh "yarrow-server"
 end
 
-task :build do
+task :sitegen do
   generate_site
+  sh "cp -r assets docs/assets"
 end
 
 YARD::Templates::Engine.register_template_path("templates/yard")
@@ -53,6 +54,4 @@ task :calyx_ui do
   sh "npm run build"
 end
 
-task :mementus_css do
-  sh ""
-end
+task :build => [:sitegen, :calyx_ui]
