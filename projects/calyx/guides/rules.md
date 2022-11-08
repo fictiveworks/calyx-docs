@@ -1,3 +1,7 @@
+---
+title: Rules
+---
+
 ## Choices
 
 ## Weighted Choices

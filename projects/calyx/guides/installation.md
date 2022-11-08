@@ -1,7 +1,5 @@
 ---
 title: Installation
-layout: docs
-permalink: /guides/installation
 ---
 
 ## System requirements

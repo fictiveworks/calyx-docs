@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Calyx</title>
+    <title>{{title}} - Calyx</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300,500,900&display=swap" rel="stylesheet">
@@ -65,13 +65,10 @@ viewBox="0 0 32 32"><path fill="currentColor" d="M 0 10 L 0 21 L 9 21 L 9 23 L 1
           <li><a href="/">Home</a></li>
           <li><a href="/introduction/">Introduction</a></li>
         </ul>
-        <h1>Installation and setup</h1>
+        <h1>{{resource.title}}</h1>
       </header>
       <article class="document">
-        <h2 id="objective">Objective</h2>
-        <p>This tutorial introduces Calyx with a basic ‘hello world’ example. Following these steps will help you get Calyx up and running and provide you with a code skeleton to start adding more interesting and creative things.</p>
-        <h2 id="initial-setup">Initial setup</h2>
-        <p>Before getting started, you’ll need to install Calyx from RubyGems and have it available in your local dev environment:</p>
+        {{{resource.body_html}}}
       </article>
       <aside class="sidebar">
         <nav class="menu">

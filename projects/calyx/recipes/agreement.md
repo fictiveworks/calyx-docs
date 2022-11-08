@@ -1,4 +1,6 @@
-# Agreement
+---
+title: Agreement
+---
 
 Grammatical agreement has a tendency to confound automated text generation. There are sometimes extra steps required to get all parts of a sentence to agree.
 

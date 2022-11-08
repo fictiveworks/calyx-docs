@@ -1,7 +1,5 @@
 ---
-layout: page
 title: Context
-permalink: /guides/context
 ---
 
 j,jnnnnnnjjj

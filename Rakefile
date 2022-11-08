@@ -3,6 +3,7 @@ $LOAD_PATH.unshift File.expand_path('./lib', __dir__)
 require "yarrow"
 require "yard"
 require "generator"
+require "calyx/docs"
 
 task :fictive do
   fictive_path = "~/Projects/fictive/fictive-editor"

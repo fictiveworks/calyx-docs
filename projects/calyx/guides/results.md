@@ -1,7 +1,5 @@
 ---
-layout: default
 title: Results
-permalink: /guides/results/
 ---
 
 # Generating Results

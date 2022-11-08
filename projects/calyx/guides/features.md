@@ -1,5 +1,4 @@
 ---
-layout: docs
 title: Features documented in README
 ---
 

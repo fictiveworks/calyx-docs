@@ -1,7 +1,5 @@
 ---
-layout: default
 title: File Formats
-permalink: /guides/formats
 ---
 
 # File Formats
