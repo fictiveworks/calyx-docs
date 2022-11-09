@@ -1,4 +1,5 @@
 import { html, render, nothing } from "lit-html";
+import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
 import { component, useState, useReducer, useEffect } from "haunted";
 
 function CopyIcon() {
@@ -55,23 +56,6 @@ const ResultView = {
   INSPECT: "inspect"
 }
 
-// const ExampleResult = virtual((state) => {
-//   console.log("From child")
-//   console.log(state)
-//
-//   // const markup = (state.mode == ResultView.STRING)
-//   //   ? html`<p class="example-text">${state.result.text}</p>`
-//   //   : html`<div class="example-inspector">${ExampleInspector(state.result)}</div>`;
-//   //
-//   // return html`<div class="example-result">
-//   //   ${markup}
-//   // </div>`;
-//
-//   return html`<div class="example-result">
-//     Static text
-//   </div>`;
-// });
-
 const initialState = {
   isReady: true,
   result: null,
@@ -89,15 +73,32 @@ function outputReducer(state, action) {
   }
 }
 
+function ExampleExpressionNode(expr, nodes) {
+  nodes.push("<details>");
+
+  for (const exp of expr) {
+    if (Array.isArray(exp)) {
+      nodes.push("<ul><li>");
+      nodes.concat(ExampleExpressionNode(exp, nodes));
+      nodes.push("</li></ul>");
+    } else if (typeof exp == 'symbol'){
+      nodes.push(`<summary>${exp.toString()}</summary>`);
+    } else {
+      nodes.push(`<ul><li>"${exp}"</li></ul>`);
+    }
+  }
+  nodes.push("</details>");
+
+  return nodes;
+}
+
 function ExampleInspector(result) {
-  //const nodes = Array.isArray(result) ?
+  const treeList = ExampleExpressionNode(result.tree, []).join("\n");
 
   return html`
-    <ul class="example-object">
-      <li>-> Result(${result.text})
-
-      </li>
-    </ul>
+    <div class="example-object">
+      ${unsafeHTML(treeList)}
+    </div>
   `;
 }
 
@@ -145,35 +146,38 @@ function ExampleConsole({ name }) {
     }));
   }
 
+  const copyCurrent = () => {
+    const currentScript = this.querySelector("example-script[selected]");
+    navigator.clipboard.writeText(currentScript.innerText);
+  }
+
   const resetExample = () => dispatch({ type: "reset" });
   const stringMode = () => dispatch({ type: "mode", mode: "string" });
   const inspectMode = () => dispatch({ type: "mode", mode: "inspect" });
 
   return html`
   <style>
-  example-console {
-    position: relative;
-  }
-
-  example-script {
-    position: relative;
-    left: 0;
-    top: 0;
-  }
-
   .example {
     left: 0;
     top: 0;
     width: 100%;
     background-color: var(--color-navbar-background);
     display: grid;
-    grid-template-columns: 62% 38%;
+    grid-template-rows: auto 240px;
     border-radius: 6px;
     box-shadow: 4px 4px 0 #333;
   }
 
   .example-container {
-    grid-column-start: 1;
+    grid-row-start: 1;
+    display: grid;
+    grid-template-rows: 1.6em auto;
+  }
+
+  .example-output {
+    grid-row-start: 2;
+    display: grid;
+    grid-template-rows: 1.6em auto 1.6em;
   }
 
   .example-container slot {
@@ -185,20 +189,9 @@ function ExampleConsole({ name }) {
     padding: 0;
   }
 
-  .example-output {
-    grid-column-start: 2;
-    border-left: 1px solid var(--color-nav-background-hover);
-  }
-
   .example-header,
   .example-footer {
     background-color: var(--color-nav-background-hover);
-  }
-
-  .example-container,
-  .example-output {
-    display: grid;
-    grid-template-rows: 1.6em auto 1.6em;
   }
 
   .example-header {
@@ -207,9 +200,6 @@ function ExampleConsole({ name }) {
 
   .example-container .example-header {
     border-top-left-radius: 6px;
-  }
-
-  .example-output .example-header {
     border-top-right-radius: 6px;
   }
 
@@ -269,8 +259,17 @@ function ExampleConsole({ name }) {
     color: var(--color-nav-link-default);
   }
 
-  .example-output .example-tabs {
+  .example-output .example-tabs li button[aria-selected] {
+    border-top: 2px solid var(--color-nav-background-hover);
+  }
+
+  .example-output .example-tabs:first-of-type {
+    justify-content: flex-start;
+  }
+
+  .example-output .example-tabs:last-of-type {
     justify-content: flex-end;
+    margin-right: 1em;
   }
 
   .example-ready {
@@ -289,11 +288,11 @@ function ExampleConsole({ name }) {
   }
 
   .example-run:hover .stroke-solid {
-    stroke: #aaa;
+    stroke: var(--color-nav-link-hover);
   }
 
   .example-run:hover .icon {
-    fill: #bbb;
+    fill: var(--color-nav-link-hover);;
   }
 
   .example-text {
@@ -314,6 +313,13 @@ function ExampleConsole({ name }) {
     background-color: var(--color-menu-link-background);
     color: var(--color-navbar-background);
   }
+
+  .example-object {
+    color: white;
+    font-size: 1em;
+    font-family: "Inconsolata", "Monaco", monospace;
+    font-weight: bold;
+  }
   </style>
   <article class="example">
     <div class="example-container">
@@ -328,23 +334,21 @@ function ExampleConsole({ name }) {
         </ul>
       </header>
       <slot></slot>
-      <footer class="example-footer">
-        <ul class="example-tabs">
-          <li><button role="button" id="copy-button">${CopyIcon()}&nbsp;Copy</button></li>
-        </ul>
-      </footer>
     </div>
     <div class="example-output">
       <header class="example-header">
         <ul class="example-tabs">
           ${!state.isReady ?
-            html`<li><button role="tab" @click=${stringMode} aria-selected>String</button></li>
-                 <li><button role="tab" @click=${inspectMode}>Result</button></li>`
+            html`<li><button role="tab" @click=${stringMode} ?aria-selected=${state.mode == ResultView.STRING}>String</button></li>
+                 <li><button role="tab" @click=${inspectMode} ?aria-selected=${state.mode == ResultView.INSPECT}>Result</button></li>`
             : nothing}
         </ul>
       </header>
       ${state.isReady ? ExampleReady(runExample) : ExampleRun(state)}
       <footer class="example-footer">
+        <ul class="example-tabs">
+          <li><button role="button" @click=${copyCurrent} id="copy-button">${CopyIcon()}&nbsp;Copy</button></li>
+        </ul>
         <ul class="example-tabs">
           ${!state.isReady ?
             html`<li><button role="button" @click=${runExample}>${RepeatIcon()}&nbsp;Repeat</button></li>
