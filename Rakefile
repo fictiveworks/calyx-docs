@@ -23,7 +23,7 @@ end
 
 task :sitegen do
   generate_site
-  sh "cp -r assets docs/assets"
+  sh "cp -r assets/ docs/assets"
 end
 
 YARD::Templates::Engine.register_template_path("templates/yard")
@@ -52,7 +52,11 @@ task :api_js => [:calyx_api_js, :mementus_api_js]
 task :api => [:api_rb, :api_js]
 
 task :calyx_ui do
+  sh "npm run build:ui"
+end
+
+task :calyx_css do
   sh "npm run build"
 end
 
-task :build => [:sitegen, :calyx_ui]
+task :build => [:sitegen, :calyx_ui, :calyx_css]

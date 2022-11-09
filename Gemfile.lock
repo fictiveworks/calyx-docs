@@ -1,7 +1,7 @@
 PATH
   remote: ../../yarrow
   specs:
-    yarrow (0.8.3)
+    yarrow (0.8.4)
       addressable (~> 2.8)
       em-websocket (~> 0.5.1)
       eventmachine (~> 1.2)
@@ -45,6 +45,7 @@ GEM
       webrick
     rake (13.0.6)
     rexml (3.2.5)
+    rouge (4.0.0)
     strings-case (0.3.0)
     strings-inflection (0.1.0)
     tty-color (0.6.0)
@@ -69,6 +70,7 @@ DEPENDENCIES
   kramdown-components
   kramdown-parser-gfm
   rake
+  rouge
   tty-prompt
   yard
   yarrow!

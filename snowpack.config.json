@@ -1,6 +1,9 @@
 {
   "mount": {
     "src": "/ui",
-    "www": "/"
+    "docs": "/"
+  },
+  "buildOptions": {
+    "out": "docs"
   }
 }

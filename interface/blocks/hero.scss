@@ -1,0 +1,134 @@
+@use "foundation/scale";
+@use "foundation/text";
+@use "foundation/color";
+
+.hero-spread {
+  width: 100vw;
+  background: radial-gradient(circle at top, #D5F584, #23894C);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.hero-image {
+  margin-top: scale.$p2;
+  margin-left: scale.$p2;
+  display: block;
+  align-self: flex-end;
+  padding: 0;
+}
+
+.hero-image svg {
+  display: block;
+  margin: 0;
+  width: 35vw;
+}
+
+.hero-lede {
+  align-self: center;
+  padding: 38px;
+}
+
+.hero-lede h1 {
+  font-size: scale.$p2;
+  // background: repeating-linear-gradient(
+  //   50deg,
+  //   #0A2E19 3px,
+  //   #23894C 10px,
+  //   #3DC569 4px
+  // ),
+  // repeating-linear-gradient(
+  //   -50deg,
+  //   #0A2E19 3px,
+  //   #23894C 10px,
+  //   #3DC569 4px
+  // );
+  // background-blend-mode: multiply;
+  // opacity: 0.85;
+  // display: inline-block;
+  background-color: var(--color-navbar-background);
+  color: #f4f7e9;
+  border-radius: 3px;
+  padding: scale.$m2;
+}
+
+.hero-lede a {
+  margin-top: scale.$p2;
+  display: inline-block;
+  border-radius: 12px;
+  font-size: scale.$p1;
+  font-weight: text.$font-display-weight;
+  padding: scale.$p0;
+  text-decoration: none;
+  color: #0A2E19;
+  background-color: #F0FDB9;
+  box-shadow: 6px 6px 0 #23894C;
+}
+
+.hero-lede a:hover {
+  color: #D5F684;
+  background-color: #0A2E19;
+  box-shadow: 6px 6px 0 #23894C;
+}
+
+.hero-lede a:active {
+  position: relative;
+  left: 6px;
+  top: 6px;
+  background-color: #0A2E19;
+  box-shadow: none;
+}
+
+
+.supporters {
+  padding: scale.$p3;
+  background-color: #f4f7e9;
+  background-color: var(--color-page-background);
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  img {
+    margin-left: scale.$p2;
+    margin-right: scale.$p2;
+  }
+
+  #rubynz-logo {
+    width: 162px;
+  }
+
+  #mch-logo {
+    width: 260px;
+  }
+
+  #uc-logo {
+    width: 152px;
+    border-radius: 6px;
+  }
+}
+
+.introduction {
+  background-color: color.$color-green-8;
+  width: 100vw;
+  display: flex;
+  justify-content: space-around;
+}
+
+.introduction-box {
+  border-radius: 3px;
+  margin: scale.$p1;
+  padding: scale.$p1;
+  grid-row-start: 2;
+  border: 1px solid color.$color-green-7;
+  //background-color: color.$color-green-7;
+  color: color.$color-green-1;
+
+  p {
+    font-size: scale.$p1;
+  }
+}
+
+/// EXAMPLE
+///
+///
+///

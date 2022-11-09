@@ -91,5 +91,17 @@ require "yarrow"
 def generate_site
   config = Yarrow::Configuration.load("Yarrowdoc")
   generator = Yarrow::Generator.new(config)
-  generator.generate
+  generator.process do |manifest|
+    generator.generators.each do |webgen|
+      webgen.generate(manifest)
+    end
+
+    manifest.documents.each do |document|
+      if document.type == :document
+        unless document.resource.body.custom_elements.empty?
+          File.write("src/#{document.name}-examples.js", document.resource.example_bundle_js)
+        end
+      end
+    end
+  end
 end

@@ -140,7 +140,7 @@ function ExampleConsole({ name }) {
       composed: true,
       detail: {
         run: (result) => dispatch({ type: "run", result }),
-        name: this.getAttribute("id").replace("-", "_")
+        name: this.getAttribute("id").replaceAll("-", "_")
       }
     }));
   }
@@ -151,21 +151,43 @@ function ExampleConsole({ name }) {
 
   return html`
   <style>
+  example-console {
+    position: relative;
+  }
+
+  example-script {
+    position: relative;
+    left: 0;
+    top: 0;
+  }
+
   .example {
+    left: 0;
+    top: 0;
     width: 100%;
     background-color: var(--color-navbar-background);
-    display: flex;
-    border-radius: 12px;
+    display: grid;
+    grid-template-columns: 62% 38%;
+    border-radius: 6px;
     box-shadow: 4px 4px 0 #333;
   }
 
   .example-container {
-    width: 60%;
+    grid-column-start: 1;
+  }
+
+  .example-container slot {
+    width: 100%;
+    max-height: 300px;
+    overflow: scroll;
+    display: block;
+    margin: 0;
+    padding: 0;
   }
 
   .example-output {
-    width: 40%;
-    border-left: 1px dotted var(--color-nav-background-hover);
+    grid-column-start: 2;
+    border-left: 1px solid var(--color-nav-background-hover);
   }
 
   .example-header,
@@ -184,11 +206,11 @@ function ExampleConsole({ name }) {
   }
 
   .example-container .example-header {
-    border-top-left-radius: 12px;
+    border-top-left-radius: 6px;
   }
 
   .example-output .example-header {
-    border-top-right-radius: 12px;
+    border-top-right-radius: 6px;
   }
 
   .example-code,
@@ -197,21 +219,25 @@ function ExampleConsole({ name }) {
     grid-row-start: 2;
   }
 
+  .example-code {
+    overflow: scroll-y;
+  }
+
   .example-footer {
     grid-row-start: 3;
   }
 
   .example-container .example-footer {
-    border-bottom-left-radius: 12px;
+    border-bottom-left-radius: 6px;
   }
 
   .example-output .example-footer {
-    border-bottom-right-radius: 12px;
+    border-bottom-right-radius: 6px;
   }
 
   .example-tabs {
     list-style-type: none;
-    margin: 0 1em;
+    margin: 0;
     padding: 0;
     display: flex;
   }
@@ -344,9 +370,11 @@ function ExampleScript({ label, selected }) {
       :host(:not([selected])) {
         display: none;
       }
-      .example-code {
-        padding: 1em;
-        font-size: 1.3em;
+
+      :host {
+        width: 62%;
+        height: 300px;
+        overflow: scroll-y;
       }
     </style>
     <div class="example-code" aria-selected=${selectedAttr}>

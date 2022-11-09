@@ -33,27 +33,29 @@ $pagebar-height: (scale.$p2 + scale.$p1 + scale.$m2 + scale.$m3);
   }
 
   h1 {
+    display: inline-block;
     margin-top: scale.$m3;
     line-height: 1.2;
-    font-size: scale.$p2;
-    font-weight: 900;
-    background: repeating-linear-gradient(
-      50deg,
-      #0A2E19 3px,
-      #23894C 10px,
-      #3DC569 4px
-    ),
-    repeating-linear-gradient(
-      -50deg,
-      #0A2E19 3px,
-      #23894C 10px,
-      #3DC569 4px
-    );
-    background-blend-mode: multiply;
-    opacity: 0.8;
-    display: inline-block;
-    //border-radius: 6px;
-    padding: scale.$m3 scale.$p1 0 scale.$m2;
+    font-size: scale.$p3;
+    background-color: #0A2E19;
+    background-color: var(--color-navbar-background);
+    border-radius: 3px;
+    // background: repeating-linear-gradient(
+    //   50deg,
+    //   #0A2E19 3px,
+    //   #23894C 10px,
+    //   #3DC569 4px
+    // ),
+    // repeating-linear-gradient(
+    //   -50deg,
+    //   #0A2E19 3px,
+    //   #23894C 10px,
+    //   #3DC569 4px
+    // );
+    // background-blend-mode: multiply;
+    // border-radius: 3px;
+    // opacity: 0.85;
+    padding: scale.$m3 scale.$m2 scale.$m3 scale.$m2;
     //clip-path: polygon(0 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%);
   }
 }

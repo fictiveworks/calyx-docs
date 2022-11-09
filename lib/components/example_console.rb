@@ -43,9 +43,11 @@ module Components
         wrapper
       end
 
-      @runnable = codeblocks.find do |codeblock|
+      runnable_languages = codeblocks.find do |codeblock|
         RUNNABLE_LANGS.include?(codeblock.options[:lang])
-      end.value
+      end
+
+      @runnable = runnable_languages.value unless runnable_languages.nil?
 
       root.children.first.attr[:selected] = true
     end

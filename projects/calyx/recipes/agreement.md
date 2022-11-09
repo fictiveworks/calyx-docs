@@ -59,7 +59,6 @@ In following example, we pick from a list of nouns *Snowball*, *Santa’s Little
 
 <example-console id="context-free-expansion">
 
-<example-code markdown="block" label="ruby" tab="ruby" selected="true">
 ```ruby
 g = Calyx::Grammar.new do
   start "{animal} {verb}."
@@ -69,9 +68,7 @@ end
 
 g.generate
 ```
-</example-code>
 
-<example-code markdown="block" label="javascript" tab="javascript" selected="false" runnable>
 ```javascript
 const g = calyx.grammar({
   start: "{animal} {verb}.",
@@ -81,31 +78,23 @@ const g = calyx.grammar({
 
 g.generate()
 ```
-</example-code>
 
-<example-code markdown="block" label="json">
-```json
-{
-  "start": "{animal} {verb}.",
-  "animal": ["Snowball", "Santa’s Little Helper"],
-  "verb": ["chases", "licks", "bites"]
-}
+```cs
+Grammar g = new Grammar(R => {
+  R.Start("{animal} {verb}.");
+  R.Rule("animal", new[] {
+    "Snowball",
+    "Santa’s Little Helper"
+  });
+  R.Rule("verb", new[] {
+    "chases", "licks", "bites"
+  });
+});
+
+Result r = g.Generate();
 ```
-</example-code>
 
 </example-console>
-
-```ruby
-require "calyx"
-
-grammar = Calyx::Grammar.new do
-  start "{animal} {verb}."
-  animal "Snowball", "Santa’s Little Helper"
-  verb "chases", "licks", "bites"
-end
-
-grammar.generate
-```
 
 We can rewrite this generator to a subject–verb–object form that incorporates a posessive but this will only work if all choices can be random and don’t need to agree with the subject of the sentence.
 

@@ -4,116 +4,29 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Calyx</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300,500,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/assets/calyx-docs.css">
+    {{> meta}}
   </head>
   <body>
-    <div class="navbar">
-  <div class="nav-brand">
-    <div class="logo">
-      <button class="nav-toggle">
-        <svg viewBox="0 0 24 24">
-          <rect width="18" height="2" fill="currentColor" rx="1"></rect>
-          <rect y="6" width="18" height="2" fill="currentColor" rx="1"></rect>
-          <rect y="12" width="18" height="2" fill="currentColor" rx="1"></rect>
-        </svg>
-      </button>
-      <figure class="logo-mark">
-        <a href="/"><svg width="74px" height="24px" viewBox="0 0 74 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-              <path d="M8.88,18.288 C0.984,18.312 0.48,14.184 0.48,9.864 C0.48,5.28 1.92,1.68 8.88,1.68 C16.752,1.68 17.136,5.688 17.136,9.384 L9.336,9.384 L9.336,7.344 C9.336,6.912 9.144,6.744 8.856,6.744 C8.568,6.744 8.376,6.912 8.376,7.344 L8.376,12.624 C8.376,13.056 8.568,13.224 8.856,13.224 C9.144,13.224 9.336,13.056 9.336,12.624 L9.336,10.224 L16.512,10.224 C16.872,10.224 17.136,10.488 17.112,10.848 C16.968,15 15.624,18.264 8.88,18.288 Z M22.3191111,18.288 C18.4311111,18.288 17.5671111,16.08 17.5671111,14.376 C17.5671111,10.656 19.7991111,9.72 24.4311111,9.72 L24.3831111,13.584 C24.3831111,14.016 24.5751111,14.328 24.8631111,14.328 L25.3431111,14.328 L25.3431111,9.288 C25.3431111,9 25.0311111,8.808 24.5991111,8.808 C22.6791111,8.832 21.2151111,8.928 19.4871111,9.504 C19.1511111,9.624 18.8151111,9.432 18.7911111,9.072 L18.4311111,6.216 C18.4071111,6 18.5271111,5.808 18.7431111,5.736 C19.9431111,5.352 22.7511111,4.752 24.8871111,4.752 C31.2231111,4.752 32.0391111,8.28 32.0391111,9.744 L32.0871111,17.376 C32.0871111,17.736 31.8231111,18 31.4631111,18 L25.2951111,18 C25.9671111,17.472 26.2791111,16.8 26.4231111,15.96 L25.5591111,15.96 C25.2951111,17.16 24.2871111,18.288 22.3191111,18.288 Z M39.2862222,18 L33.6702222,18 C33.3102222,18 33.0462222,17.736 33.0462222,17.4 L33.0462222,0.648 C33.0462222,0.312 33.3102222,0.048 33.6462222,0.048 L39.4062222,0.048 C39.6702222,0.048 39.8862222,0.264 39.8862222,0.528 L39.8862222,17.4 C39.8862222,17.736 39.6222222,18 39.2862222,18 Z M49.5573334,23.112 L43.8933334,23.112 C43.3413334,23.112 43.0053334,22.608 43.2453334,22.104 L45.5973334,16.896 L40.7013334,6.096 C40.4613334,5.568 40.7733334,5.04 41.3493334,5.04 L46.5573334,5.04 C46.8213334,5.04 47.0373334,5.184 47.1333334,5.424 L50.7333334,13.2 C50.8533334,13.44 51.0933334,13.536 51.3333334,13.44 C51.5493334,13.368 51.6213334,13.08 51.5013334,12.816 L47.9253334,5.04 L56.9493334,5.04 C57.5493334,5.04 57.8373334,5.568 57.5973334,6.096 L50.0613334,22.8 C49.9653334,22.992 49.7973334,23.112 49.5573334,23.112 Z M64.4844445,18.024 L58.8924445,18 C58.1724445,18 57.8364445,17.304 58.2684445,16.704 L62.2764445,11.544 L58.6284445,6.264 C58.2684445,5.688 58.6044445,5.04 59.3004445,5.04 L66.3564445,5.04 L63.7164445,8.328 C63.5004445,8.592 63.4764445,8.904 63.6684445,9.048 C63.8604445,9.192 64.1724445,9.096 64.3884445,8.808 L67.1964445,5.232 C67.3164445,5.112 67.4604445,5.04 67.6044445,5.04 L73.0284445,5.04 C73.7724445,5.04 74.1324445,5.736 73.6764445,6.336 L69.6924445,11.544 L73.4364445,16.752 C73.8684445,17.328 73.5084445,18 72.8124445,18 L65.7804445,18 L68.3484445,14.76 C68.5644445,14.472 68.5884445,14.16 68.3964445,14.016 C68.2044445,13.872 67.9164445,13.968 67.7004445,14.232 L64.8684445,17.832 C64.7724445,17.952 64.6284445,18.024 64.4844445,18.024 Z" fill="currentColor"></path>
-        </svg></a>
-      </figure>
+    {{> navbar}}
+    {{> hero}}
+
+    <div class="introduction">
+      <div class="introduction-box">
+        <h2>What is Calyx?</h2>
+        <p>Calyx is a simple and powerful software library for producing random sequences of text using template expansion grammars.</p>
+        <p>Its primary affordances are for creating artbots, name generators and weird combinatorial prose and poetry but you can use it to generate anything that has a textual or tree-based representation, including SVG graphics, MIDI notes, or worldbuilding and story structures within a larger system.</p>
+      </div>
+      <div class="introduction-box">
+        <h2>Why grammars?</h2>
+        <p>There are many useful and interesting methods for generative writing. The grammar-based approach is popular, widely studied and practiced, and easy to get started with.</p>
+        <p>Grammars offer direct authorial control over the fragments that combine to produce an output text. This involves more effort and structure than other more random approaches, but leads to carefully crafted and expressive results which still have a capacity to surprise, delight, and confound—as any good text generation method should.</p>
+      </div>
     </div>
-    <div class="nav-menu">
-      <ul>
-        <li><a href="/documentation/">Documentation</a></li>
-        <li><a href="/examples/">Examples</a></li>
-        <li><a href="/changelog/">Changelog</a></li>
-      </ul>
+
+    <div class="supporters">
+      <a href="https://productdesign.ac.nz/"><img id="uc-logo" src="/assets/supporters/uc-games-logo.png" alt="School of Product Design, University of Canterbury"></a>
+      <a href="https://mch.govt.nz/"><img id="mch-logo" src="/assets/supporters/mch-rgb-disk.png" alt="Manatū Taonga Ministry for Culture and Heritage"></a>
+      <a href="https://ruby.nz/"><img id="rubynz-logo" src="/assets/supporters/rubynz-logo.png" alt="RubyNZ"></a>
     </div>
-  </div>
-  <div class="nav-menu is-meta">
-    <ul>
-      <li><a href="https://github.com/maetl/calyx"><svg aria-labelledby="simpleicons-github-icon" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
-  <title id="simpleicons-github-icon">GitHub icon</title>
-  <path fill="currentColor" d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
-</svg>
-<span>GitHub Project</span></a></li>
-      <li><a href="https://rubygems.org/gems/calyx"><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-   viewBox="0 0 200 200" enable-background="new 0 0 200 200" width="28" height="28">
-  <g id="Logo">
-    <polygon fill="currentColor" points="68.8,69.9 68.7,69.8 46.5,92 100.4,145.8 122.6,123.7 154.3,92 132.1,69.8 132.1,69.7 68.7,69.7
-      "/>
-    <path fill="currentColor" d="M100.2,10.6l-78.5,45v90l78.5,45l78.5-45v-90L100.2,10.6z M163.7,137l-63.5,36.6L36.7,137V64l63.5-36.6
-      L163.7,64V137z"/>
-  </g>
-</svg>
-<span>RubyGems Package</span></a></li>
-
-  <li><a href="https://npmjs.com/package/calyx"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px"
-width="32" height="32"
-viewBox="0 0 32 32"><path fill="currentColor" d="M 0 10 L 0 21 L 9 21 L 9 23 L 16 23 L 16 21 L 32 21 L 32 10 L 0 10 z M 1.7773438 11.777344 L 8.8886719 11.777344 L 8.890625 11.777344 L 8.890625 19.445312 L 7.1113281 19.445312 L 7.1113281 13.556641 L 5.3339844 13.556641 L 5.3339844 19.445312 L 1.7773438 19.445312 L 1.7773438 11.777344 z M 10.667969 11.777344 L 17.777344 11.777344 L 17.779297 11.777344 L 17.779297 19.443359 L 14.222656 19.443359 L 14.222656 21.222656 L 10.667969 21.222656 L 10.667969 11.777344 z M 19.556641 11.777344 L 30.222656 11.777344 L 30.224609 11.777344 L 30.224609 19.445312 L 28.445312 19.445312 L 28.445312 13.556641 L 26.667969 13.556641 L 26.667969 19.445312 L 24.890625 19.445312 L 24.890625 13.556641 L 23.111328 13.556641 L 23.111328 19.445312 L 19.556641 19.445312 L 19.556641 11.777344 z M 14.222656 13.556641 L 14.222656 17.667969 L 16 17.667969 L 16 13.556641 L 14.222656 13.556641 z"></path></svg><span>NPM Package</span></a></li>
-
-    </ul>
-  </div>
-</div>
-    <main class="page">
-      <header class="pagebar">
-        <ul class="breadcrumbs">
-          <li><a href="/">Home</a></li>
-          <li><a href="/introduction/">Introduction</a></li>
-        </ul>
-        <h1>Installation and setup</h1>
-      </header>
-      <article class="document">
-        <h2 id="objective">Objective</h2>
-        <p>This tutorial introduces Calyx with a basic ‘hello world’ example. Following these steps will help you get Calyx up and running and provide you with a code skeleton to start adding more interesting and creative things.</p>
-        <h2 id="initial-setup">Initial setup</h2>
-        <p>Before getting started, you’ll need to install Calyx from RubyGems and have it available in your local dev environment:</p>
-      </article>
-      <aside class="sidebar">
-        <nav class="menu">
-          <div class="menu">
-
-          <p class="menu-label">
-          <a href="/introduction/" class="">Introduction</a>
-          </p>
-          <ul class="menu-list">
-
-          <li><a href="/introduction/tutorial" class="is-active">Tutorial</a></li>
-
-          <li><a href="/introduction/concepts" class="">Key Concepts</a></li>
-
-          <li><a href="/introduction/beginners" class="">For Beginners</a></li>
-
-          <li><a href="/introduction/contributing" class="">Contributing</a></li>
-
-          </ul>
-
-          <p class="menu-label">
-          <a href="/guides/" class="">Guides</a>
-          </p>
-          <ul class="menu-list">
-
-          <li><a href="/guides/installation" class="">Installation</a></li>
-
-          <li><a href="/guides/results" class="">Generating Results</a></li>
-
-          <li><a href="/guides/dynamic-rules" class="">Dynamic Rules</a></li>
-
-          <li><a href="/guides/template-expressions" class="">Template Expressions</a></li>
-
-          <li><a href="/guides/weighted-choices" class="">Weighted Choices</a></li>
-
-          <li><a href="/guides/extending" class="">Extending Grammars</a></li>
-
-          <li><a href="/guides/random-seeds" class="">Random Seeds</a></li>
-
-          </ul>
-        </nav>
-      </aside>
-    </main>
   </body>
 </html>

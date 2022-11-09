@@ -7,8 +7,8 @@ $color-syntax-operator: #FA8676;
 $color-syntax-keyword: color.$aquamarine;
 $color-syntax-string: #C2FBE0;
 
-.highlight .hll { background-color: $color-syntax-background; }
-.highlight  { color: $color-syntax-literal; background-color: $color-syntax-background; font-weight: bold; }
+//.highlight .hll { background-color: $color-syntax-background; }
+.highlight  { margin: 1em; color: $color-syntax-literal; font-size: 16px; font-weight: 700; }
 .highlight .c { color: $color-syntax-comment; font-style: italic } /* Comment */
 .highlight .err { color: #a40000; border: 1px solid #ef2929 } /* Error */
 .highlight .g { color: $color-syntax-literal; } /* Generic */
