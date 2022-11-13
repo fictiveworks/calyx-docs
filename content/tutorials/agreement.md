@@ -8,7 +8,7 @@ Here, we’ll explore different ways to generate English sentences using Calyx b
 
 ## What is gramatical agreement?
 
-English is not the most complicated language when it comes to inflection and declension patterns but it does have several categories we have to pay close attention to in writing.
+English isn’t the most complicated language when it comes to inflection and declension patterns but it does have several categories we have to pay close attention to in writing.
 
 ## Person
 
@@ -49,7 +49,7 @@ Determiners also have their own specific singular and plural forms:
 
 We don’t often need to think about these categories consciously when we’re writing. We know what sounds right. But we sometimes need to think about this connective tissue when we build up word and phrase lists for generating sentences and want to avoid undeliberated juxtapositions that break grammatical rules.
 
-A little bit of planning goes a long way here, especially on larger projects. Sketching out examples of the desired textures and phrase structures to generate makes it easier to write new fragments that snaplock into whole sentences and scan well at a glance.
+A little bit of planning goes a long way here, especially on larger projects. Sketching out examples of desired word combinations and phrase structures makes it easier to introduce randomness while retaining the properties of fragments that snaplock into whole sentences and scan well at a glance.
 
 ## Context-free expansion
 
