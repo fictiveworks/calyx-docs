@@ -1,6 +1,29 @@
 import { html, render, nothing } from "lit-html";
 import { unsafeHTML } from "lit-html/directives/unsafe-html.js";
-import { component, useState, useReducer, useEffect } from "haunted";
+import { supportsAdoptingStyleSheets, css } from "lit";
+import { component, useState, useReducer, useEffect, useLayoutEffect} from "haunted";
+
+function useConstructableStylesheets(el, styles) {
+  const adoptStyles = (el) => {
+    if (styles.length === 0) {
+      return;
+    }
+    if (supportsAdoptingStyleSheets) {
+      el.shadowRoot.adoptedStyleSheets = styles.map((s) =>
+        s instanceof CSSStyleSheet ? s : s.styleSheet
+      );
+    } else {
+      styles.forEach((s) => {
+        const style = document.createElement("style");
+        style.textContent = s.cssText;
+        el.shadowRoot.appendChild(style);
+      });
+    }
+  };
+  useLayoutEffect(() => {
+    adoptStyles(el);
+  }, [styles]);
+}
 
 function CopyIcon() {
   return html`
@@ -155,172 +178,175 @@ function ExampleConsole({ name }) {
   const stringMode = () => dispatch({ type: "mode", mode: "string" });
   const inspectMode = () => dispatch({ type: "mode", mode: "inspect" });
 
+  const styles = [
+    css`
+    .example {
+      left: 0;
+      top: 0;
+      width: 100%;
+      background-color: var(--color-navbar-background);
+      display: grid;
+      grid-template-rows: auto 240px;
+      border-radius: 6px;
+    }
+
+    .example-container {
+      grid-row-start: 1;
+      display: grid;
+      grid-template-rows: 1.6em auto;
+    }
+
+    .example-output {
+      grid-row-start: 2;
+      display: grid;
+      grid-template-rows: 1.6em auto 1.6em;
+    }
+
+    .example-container slot {
+      width: 100%;
+      max-height: 300px;
+      overflow: scroll;
+      display: block;
+      margin: 0;
+      padding: 0;
+    }
+
+    .example-header,
+    .example-footer {
+      background-color: var(--color-nav-background-hover);
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .example-header {
+      grid-row-start: 1;
+    }
+
+    .example-container .example-header {
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+    }
+
+    .example-code,
+    .example-result,
+    .example-ready {
+      grid-row-start: 2;
+    }
+
+    .example-code {
+      overflow: scroll-y;
+    }
+
+    .example-footer {
+      grid-row-start: 3;
+    }
+
+    .example-container .example-footer {
+      border-bottom-left-radius: 6px;
+    }
+
+    .example-output .example-footer {
+      border-bottom-right-radius: 6px;
+    }
+
+    .example-tabs {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    .example-tabs li {
+      margin: 0;
+    }
+
+    .example-tabs li button {
+      display: inline-flex;
+      align-items: center;
+      border: none;
+      margin: 0;
+      padding: 0 1em;
+      height: 1.6em;
+      background-color: transparent;
+      font-size: 100%;
+      font-family: inherit;
+      line-height: 1;
+    }
+
+    .example-tabs li button[aria-selected] {
+      background-color: var(--color-navbar-background);
+      color: var(--color-nav-link-default);
+    }
+
+    .example-tabs li button:hover {
+      background-color: var(--color-navbar-background);
+      color: var(--color-nav-link-default);
+    }
+
+    .example-tabs {
+      justify-content: flex-start;
+      margin-left: 1em;
+    }
+
+    .example-footer .example-tabs,
+    .example-tabs + .example-tabs {
+      margin-right: 1em;
+    }
+
+    .example-ready {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .example-run {
+      border: none;
+      background-color: transparent;
+    }
+
+    .example-run:hover {
+      cursor: pointer;
+    }
+
+    .example-run:hover .stroke-solid {
+      stroke: var(--color-nav-link-hover);
+    }
+
+    .example-run:hover .icon {
+      fill: var(--color-nav-link-hover);;
+    }
+
+    .example-text {
+      font-size: 1em;
+      padding: 1em;
+      color: white;
+    }
+
+    .stroke-solid {
+      stroke-width: 4px;
+    }
+
+    .example-tabs li button[role=button]:hover {
+      cursor: pointer;
+    }
+
+    .example-tabs li button[role=button]:active {
+      background-color: var(--color-menu-link-background);
+      color: var(--color-navbar-background);
+    }
+
+    .example-object {
+      color: white;
+      font-size: 1em;
+      font-family: "Inconsolata", "Monaco", monospace;
+      font-weight: bold;
+    }
+    `
+  ];
+
+  useConstructableStylesheets(this, styles);
+
   return html`
-  <style>
-  .example {
-    left: 0;
-    top: 0;
-    width: 100%;
-    background-color: var(--color-navbar-background);
-    display: grid;
-    grid-template-rows: auto 240px;
-    border-radius: 6px;
-    box-shadow: 4px 4px 0 #333;
-  }
-
-  .example-container {
-    grid-row-start: 1;
-    display: grid;
-    grid-template-rows: 1.6em auto;
-  }
-
-  .example-output {
-    grid-row-start: 2;
-    display: grid;
-    grid-template-rows: 1.6em auto 1.6em;
-  }
-
-  .example-container slot {
-    width: 100%;
-    max-height: 300px;
-    overflow: scroll;
-    display: block;
-    margin: 0;
-    padding: 0;
-  }
-
-  .example-header,
-  .example-footer {
-    background-color: var(--color-nav-background-hover);
-  }
-
-  .example-header {
-    grid-row-start: 1;
-  }
-
-  .example-container .example-header {
-    border-top-left-radius: 6px;
-    border-top-right-radius: 6px;
-  }
-
-  .example-code,
-  .example-result,
-  .example-ready {
-    grid-row-start: 2;
-  }
-
-  .example-code {
-    overflow: scroll-y;
-  }
-
-  .example-footer {
-    grid-row-start: 3;
-  }
-
-  .example-container .example-footer {
-    border-bottom-left-radius: 6px;
-  }
-
-  .example-output .example-footer {
-    border-bottom-right-radius: 6px;
-  }
-
-  .example-tabs {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    display: flex;
-  }
-
-  .example-tabs li {
-    margin: 0;
-  }
-
-  .example-tabs li button {
-    display: inline-flex;
-    align-items: center;
-    border: none;
-    margin: 0;
-    padding: 0 1em;
-    height: 1.6em;
-    background-color: transparent;
-    font-size: 100%;
-    font-family: inherit;
-    line-height: 1;
-  }
-
-  .example-tabs li button[aria-selected] {
-    background-color: var(--color-navbar-background);
-    color: var(--color-nav-link-default);
-  }
-
-  .example-tabs li button:hover {
-    background-color: var(--color-navbar-background);
-    color: var(--color-nav-link-default);
-  }
-
-  .example-output .example-tabs li button[aria-selected] {
-    border-top: 2px solid var(--color-nav-background-hover);
-  }
-
-  .example-output .example-tabs:first-of-type {
-    justify-content: flex-start;
-  }
-
-  .example-output .example-tabs:last-of-type {
-    justify-content: flex-end;
-    margin-right: 1em;
-  }
-
-  .example-ready {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-
-  .example-run {
-    border: none;
-    background-color: transparent;
-  }
-
-  .example-run:hover {
-    cursor: pointer;
-  }
-
-  .example-run:hover .stroke-solid {
-    stroke: var(--color-nav-link-hover);
-  }
-
-  .example-run:hover .icon {
-    fill: var(--color-nav-link-hover);;
-  }
-
-  .example-text {
-    font-size: 1em;
-    padding: 1em;
-    color: white;
-  }
-
-  .stroke-solid {
-    stroke-width: 4px;
-  }
-
-  .example-tabs li button[role=button]:hover {
-    cursor: pointer;
-  }
-
-  .example-tabs li button[role=button]:active {
-    background-color: var(--color-menu-link-background);
-    color: var(--color-navbar-background);
-  }
-
-  .example-object {
-    color: white;
-    font-size: 1em;
-    font-family: "Inconsolata", "Monaco", monospace;
-    font-weight: bold;
-  }
-  </style>
   <article class="example">
     <div class="example-container">
       <header class="example-header">
@@ -332,6 +358,9 @@ function ExampleConsole({ name }) {
             `;
           })}
         </ul>
+        <ul class="example-tabs">
+          <li><button role="button" @click=${copyCurrent} id="copy-button">${CopyIcon()}&nbsp;Copy</button></li>
+        </ul>
       </header>
       <slot></slot>
     </div>
@@ -339,16 +368,13 @@ function ExampleConsole({ name }) {
       <header class="example-header">
         <ul class="example-tabs">
           ${!state.isReady ?
-            html`<li><button role="tab" @click=${stringMode} ?aria-selected=${state.mode == ResultView.STRING}>String</button></li>
-                 <li><button role="tab" @click=${inspectMode} ?aria-selected=${state.mode == ResultView.INSPECT}>Result</button></li>`
+            html`<li><button role="tab" @click=${stringMode} ?aria-selected=${state.mode == ResultView.STRING}>Text</button></li>
+                 <li><button role="tab" @click=${inspectMode} ?aria-selected=${state.mode == ResultView.INSPECT}>Tree</button></li>`
             : nothing}
         </ul>
       </header>
       ${state.isReady ? ExampleReady(runExample) : ExampleRun(state)}
       <footer class="example-footer">
-        <ul class="example-tabs">
-          <li><button role="button" @click=${copyCurrent} id="copy-button">${CopyIcon()}&nbsp;Copy</button></li>
-        </ul>
         <ul class="example-tabs">
           ${!state.isReady ?
             html`<li><button role="button" @click=${runExample}>${RepeatIcon()}&nbsp;Repeat</button></li>

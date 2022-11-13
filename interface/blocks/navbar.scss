@@ -9,6 +9,7 @@ $navbar-transition-timing: 0.2s;
   width: 100%;
   height: $navbar-height;
   background-color: var(--color-navbar-background);
+  border-bottom: 1px dotted var(--color-primary-7);
 
   @include media.until-tablet {
     //transition: height $navbar-transition-timing ease-in;

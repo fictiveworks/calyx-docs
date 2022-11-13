@@ -60,43 +60,44 @@ In following example, we pick from a list of nouns *Snowball*, *Santa’s Little
 <example-console id="context-free-expansion">
 
 ```ruby
-g = Calyx::Grammar.new do
+require "calyx"
+
+pet_sentence = Calyx::Grammar.new do
   start "{animal} {verb}."
   animal "Snowball", "Santa’s Little Helper"
   verb "chases", "licks", "bites"
 end
 
-g.generate
+pet_sentence.generate
 ```
 
 ```javascript
-const g = calyx.grammar({
+import { grammar } from "calyx"
+
+const petSentence = calyx.grammar({
   start: "{animal} {verb}.",
   animal: ["Snowball", "Santa’s Little Helper"],
   verb: ["chases", "licks", "bites"]
 })
 
-g.generate()
+petSentence.generate()
 ```
 
 ```cs
-Grammar g = new Grammar(R => {
+Grammar petSentence = new Grammar(R => {
   R.Start("{animal} {verb}.");
-  R.Rule("animal", new[] {
-    "Snowball",
-    "Santa’s Little Helper"
-  });
-  R.Rule("verb", new[] {
-    "chases", "licks", "bites"
-  });
+  R.Rule("animal", new[] { "Snowball", "Santa’s Little Helper" });
+  R.Rule("verb", new[] { "chases", "licks", "bites" });
 });
 
-Result r = g.Generate();
+petSentence.Generate();
 ```
 
 </example-console>
 
 We can rewrite this generator to a subject–verb–object form that incorporates a posessive but this will only work if all choices can be random and don’t need to agree with the subject of the sentence.
+
+<example-console id="subject–verb–object">
 
 ```ruby
 require "calyx"
@@ -126,11 +127,27 @@ const catAndMouse = grammar({
 catAndMouse.generate()
 ```
 
+```cs
+Grammar catAndMouse = new Grammar(R => {
+  R.Start("{animal} {verb} {possessive} {appendage}.");
+  R.Rule("animal", new[] { "Snowball", "Santa’s Little Helper" });
+  R.Rule("verb", new[] { "chases", "licks", "bites" });
+  R.Rule("possessive", new[] { "her", "his", "its" });
+  R.Rule("appendage", new[] { "tail", "paw" });
+});
+
+catAndMouse.Generate();
+```
+
+</example-console>
+
 Here, we expect Snowball to always be matched with feminine inflections and Santa’s Little Helper to be matched with masculine inflections but that isn’t what we get. Each time we expand to a result, a different inflection will be assigned.
 
 ## Crafting consistent branches
 
 The first thing we can do is try to break up the sentence into fragments that contain enough bridging context for each result to agree consistently. This usually means splitting off into separate branches for each subject so that all subsequent expansions within that branch are consistent.
+
+<example-console id="branch-fragments">
 
 ```ruby
 require "calyx"
@@ -144,6 +161,21 @@ end
 
 cat_n_mouse.generate
 ```
+
+```javascript
+import { grammar } from "calyx";
+
+const catAndMouse = grammar({
+  start: ["Snowball {verb} her {appendage}",
+          "Santa’s Little Helper {verb} his {appendage}"]
+  verb: ["chases", "licks", "bites"],
+  appendage: ["tail", "paw"]
+})
+
+catAndMouse.generate()
+```
+
+</example-console>
 
 We now have sentences that agree consistently but the trade-off is that the grammar is less flexible and has a lot of duplication. Although there are only two possible subject variations here, in practice we often want to build up these lists of nouns from external data sources or name generators where it’s not viable to carefully craft sentence fragments for each possible variation.
 

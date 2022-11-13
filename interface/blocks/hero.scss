@@ -4,7 +4,8 @@
 
 .hero-spread {
   width: 100vw;
-  background: radial-gradient(circle at top, #D5F584, #23894C);
+  //background: radial-gradient(circle at right, var(--color-primary-4), var(--color-primary-7));
+  background: radial-gradient(circle at left, var(--color-primary-6), var(--color-primary-8));
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -46,8 +47,9 @@
   // background-blend-mode: multiply;
   // opacity: 0.85;
   // display: inline-block;
-  background-color: var(--color-navbar-background);
-  color: #f4f7e9;
+  //background-color: var(--color-navbar-background);
+  //color: #f4f7e9;
+  color: var(--color-primary-1);
   border-radius: 3px;
   padding: scale.$m2;
 }
@@ -108,7 +110,7 @@
 }
 
 .introduction {
-  background-color: color.$color-green-8;
+  background-color: color.$color-green-1;
   width: 100vw;
   display: flex;
   justify-content: space-around;
@@ -121,7 +123,7 @@
   grid-row-start: 2;
   border: 1px solid color.$color-green-7;
   //background-color: color.$color-green-7;
-  color: color.$color-green-1;
+  color: color.$color-green-8;
 
   p {
     font-size: scale.$p1;

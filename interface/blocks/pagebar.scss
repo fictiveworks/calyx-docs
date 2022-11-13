@@ -8,9 +8,9 @@ $pagebar-height: (scale.$p2 + scale.$p1 + scale.$m2 + scale.$m3);
   //   linear-gradient(var(--color-pagebar-background-1), var(--color-pagebar-background-2)),
   //   radial-gradient(circle at right, var(--color-pagebar-background-3), var(--color-pagebar-background-4));
   // background-blend-mode: multiply;
-  background: radial-gradient(circle at right, #D5F584, #23894C);
+  background: radial-gradient(circle at right, var(--color-primary-6), var(--color-primary-8));
   min-height: $pagebar-height;
-  color: var(--color-pagebar-foreground);
+  color: var(--color-primary-1);
   padding: scale.$p0;
 
   .breadcrumbs {
@@ -37,9 +37,10 @@ $pagebar-height: (scale.$p2 + scale.$p1 + scale.$m2 + scale.$m3);
     margin-top: scale.$m3;
     line-height: 1.2;
     font-size: scale.$p3;
-    background-color: #0A2E19;
-    background-color: var(--color-navbar-background);
-    border-radius: 3px;
+    //background-color: #0A2E19;
+    //background-color: var(--color-navbar-background);
+    //border-radius: 3px;
+
     // background: repeating-linear-gradient(
     //   50deg,
     //   #0A2E19 3px,
@@ -55,7 +56,8 @@ $pagebar-height: (scale.$p2 + scale.$p1 + scale.$m2 + scale.$m3);
     // background-blend-mode: multiply;
     // border-radius: 3px;
     // opacity: 0.85;
-    padding: scale.$m3 scale.$m2 scale.$m3 scale.$m2;
+
+    padding: scale.$m3 scale.$p0 scale.$m3 scale.$m2;
     //clip-path: polygon(0 0, 100% 0, 100% calc(100% - 18px), calc(100% - 18px) 100%, 0 100%);
   }
 }
