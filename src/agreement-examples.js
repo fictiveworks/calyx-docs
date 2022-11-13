@@ -1,7 +1,6 @@
 import calyx from "calyx";
 
 function context_free_expansion(action) {
-  import { grammar } from "calyx"
   
   const petSentence = calyx.grammar({
     start: "{animal} {verb}.",
@@ -12,8 +11,7 @@ function context_free_expansion(action) {
   return petSentence.generate()
 }
 
-function subject–verb–object(action) {
-  import { grammar } from "calyx";
+function subject_verb_object(action) {
   
   const catAndMouse = grammar({
     start: "{animal} {verb} {possessive} {appendage}.",
@@ -27,11 +25,10 @@ function subject–verb–object(action) {
 }
 
 function branch_fragments(action) {
-  import { grammar } from "calyx";
   
   const catAndMouse = grammar({
     start: ["Snowball {verb} her {appendage}",
-            "Santa’s Little Helper {verb} his {appendage}"]
+            "Santa’s Little Helper {verb} his {appendage}"],
     verb: ["chases", "licks", "bites"],
     appendage: ["tail", "paw"]
   })
@@ -40,7 +37,7 @@ function branch_fragments(action) {
 }
 
 const exampleHandlers = {
-  context_free_expansion, subject–verb–object, branch_fragments
+  context_free_expansion, subject_verb_object, branch_fragments
 };
 
 document.addEventListener("example-console:run", (ev) => {

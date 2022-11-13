@@ -55,7 +55,7 @@ module Components
     private
 
     def gen_js_body
-      lines = @runnable.split("\n")
+      lines = @runnable.split("\n").reject { |line| line.start_with?("import") }
       result_ret = lines.last.lstrip
       lines[lines.count - 1] = "return #{result_ret}"
       "\s\s" + lines.join("\n\s\s")

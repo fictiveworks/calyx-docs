@@ -97,7 +97,7 @@ petSentence.Generate();
 
 We can rewrite this generator to a subject–verb–object form that incorporates a posessive but this will only work if all choices can be random and don’t need to agree with the subject of the sentence.
 
-<example-console id="subject–verb–object">
+<example-console id="subject-verb-object">
 
 ```ruby
 require "calyx"
@@ -167,7 +167,7 @@ import { grammar } from "calyx";
 
 const catAndMouse = grammar({
   start: ["Snowball {verb} her {appendage}",
-          "Santa’s Little Helper {verb} his {appendage}"]
+          "Santa’s Little Helper {verb} his {appendage}"],
   verb: ["chases", "licks", "bites"],
   appendage: ["tail", "paw"]
 })
