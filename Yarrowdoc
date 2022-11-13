@@ -1,4 +1,4 @@
-source_dir: projects/calyx
+source_dir: content
 output_dir: docs
 meta:
   title: Calyx
