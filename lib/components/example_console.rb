@@ -24,11 +24,13 @@ module Components
     end
 
     def to_js
-      "function #{name}(action) {\n#{gen_js_body}\n}"
+      "function #{name}(action) {\n#{gen_js_body}\n}" if @runnable
     end
 
     def parse_dom(root)
       codeblocks = root.children.filter { |child_el| child_el.type == :codeblock }
+
+      return if codeblocks.empty?
 
       root.children = codeblocks.map do |codeblock|
         codeblock.options[:lang]
@@ -49,7 +51,11 @@ module Components
 
       @runnable = runnable_languages.value unless runnable_languages.nil?
 
-      root.children.first.attr[:selected] = true
+      root.children.first.attr[:selected] = true unless root.children.first.nil?
+    end
+
+    def has_runnable_custom_elements?
+      !@runnable.nil?
     end
 
     private
@@ -64,3 +70,4 @@ module Components
 end
 
 Kramdown::CustomDocument.define_element("example-console", Components::ExampleConsole)
+Kramdown::CustomDocument.define_element("example-script", Kramdown::CustomElement)

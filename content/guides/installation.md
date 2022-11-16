@@ -12,6 +12,20 @@ The following prerequisites are needed to install Calyx:
 
 Calyx has no external Gem dependencies.
 
+## Multilanguage Install
+
+<example-console id="install-test" hideplayer="true">
+
+<example-script label="RubyGems" selected="true">
+gem install calyx
+</example-script>
+
+<example-script label="NPM">
+npm install calyx
+</example-script>
+
+</example-console>
+
 ## For command line use
 
 Install the Calyx gem using the [RubyGems](https://rubygems.org) package manager:

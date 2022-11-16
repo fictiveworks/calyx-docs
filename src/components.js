@@ -135,7 +135,7 @@ function ExampleRun(state) {
   </div>`;
 }
 
-function ExampleConsole({ name }) {
+function ExampleConsole({ name, hideplayer }) {
   const [state, dispatch] = useReducer(outputReducer, initialState);
   const [selectedTab, setSelectedTab] = useState(null);
   const tabs = [];
@@ -364,31 +364,33 @@ function ExampleConsole({ name }) {
       </header>
       <slot></slot>
     </div>
-    <div class="example-output">
-      <header class="example-header">
-        <ul class="example-tabs">
-          ${!state.isReady ?
-            html`<li><button role="tab" @click=${stringMode} ?aria-selected=${state.mode == ResultView.STRING}>Text</button></li>
-                 <li><button role="tab" @click=${inspectMode} ?aria-selected=${state.mode == ResultView.INSPECT}>Tree</button></li>`
-            : nothing}
-        </ul>
-      </header>
-      ${state.isReady ? ExampleReady(runExample) : ExampleRun(state)}
-      <footer class="example-footer">
-        <ul class="example-tabs">
-          ${!state.isReady ?
-            html`<li><button role="button" @click=${runExample}>${RepeatIcon()}&nbsp;Repeat</button></li>
-                 <li><button role="button" @click=${resetExample}>${ResetIcon()}&nbsp;Reset</button></li>`
-            : nothing}
-        </ul>
-      </footer>
-    </div>
+    ${!hideplayer ?
+      html`<div class="example-output">
+        <header class="example-header">
+          <ul class="example-tabs">
+            ${!state.isReady ?
+              html`<li><button role="tab" @click=${stringMode} ?aria-selected=${state.mode == ResultView.STRING}>Text</button></li>
+                   <li><button role="tab" @click=${inspectMode} ?aria-selected=${state.mode == ResultView.INSPECT}>Tree</button></li>`
+              : nothing}
+          </ul>
+        </header>
+        ${state.isReady ? ExampleReady(runExample) : ExampleRun(state)}
+        <footer class="example-footer">
+          <ul class="example-tabs">
+            ${!state.isReady ?
+              html`<li><button role="button" @click=${runExample}>${RepeatIcon()}&nbsp;Repeat</button></li>
+                   <li><button role="button" @click=${resetExample}>${ResetIcon()}&nbsp;Reset</button></li>`
+              : nothing}
+          </ul>
+        </footer>
+      </div>`
+    : nothing}
   </article>
   `;
 }
 
 customElements.define("example-console", component(ExampleConsole, {
-  observedAttributes: ["name"],
+  observedAttributes: ["name", "hideplayer"],
   useShadowDOM: true
 }));
 

@@ -11,8 +11,9 @@
     <main class="page">
       <header class="pagebar">
         <ul class="breadcrumbs">
-          <li><a href="/">Home</a></li>
-          <li><a href="/introduction/">Introduction</a></li>
+          {{#breadcrumbs}}
+            <li><a href="{{crumb_url}}">{{crumb_title}}</a></li>
+          {{/breadcrumbs}}
         </ul>
         <h1>{{resource.title}}</h1>
       </header>
@@ -20,48 +21,14 @@
         {{{resource.body_html}}}
       </article>
       <aside class="sidebar">
-        <nav class="menu">
-          <div class="menu">
-
-          <p class="menu-label">
-          <a href="/introduction/" class="">Introduction</a>
-          </p>
-          <ul class="menu-list">
-
-          <li><a href="/introduction/tutorial" class="is-active">Tutorial</a></li>
-
-          <li><a href="/introduction/concepts" class="">Key Concepts</a></li>
-
-          <li><a href="/introduction/beginners" class="">For Beginners</a></li>
-
-          <li><a href="/introduction/contributing" class="">Contributing</a></li>
-
-          </ul>
-
-          <p class="menu-label">
-          <a href="/guides/" class="">Guides</a>
-          </p>
-          <ul class="menu-list">
-
-          <li><a href="/guides/installation" class="">Installation</a></li>
-
-          <li><a href="/guides/results" class="">Generating Results</a></li>
-
-          <li><a href="/guides/dynamic-rules" class="">Dynamic Rules</a></li>
-
-          <li><a href="/guides/template-expressions" class="">Template Expressions</a></li>
-
-          <li><a href="/guides/weighted-choices" class="">Weighted Choices</a></li>
-
-          <li><a href="/guides/extending" class="">Extending Grammars</a></li>
-
-          <li><a href="/guides/random-seeds" class="">Random Seeds</a></li>
-
-          </ul>
-        </nav>
+      {{#resource.is_guide?}}
+        {{> guides-menu}}
+      {{/resource.is_guide?}}
       </aside>
     </main>
     <script type="module" src="/ui/components.js"></script>
+    {{#resource.has_example_bundle_js?}}
     <script type="module" src="/ui/{{name}}-examples.js"></script>
+    {{/resource.has_example_bundle_js?}}
   </body>
 </html>

@@ -98,7 +98,7 @@ def generate_site
 
     manifest.documents.each do |document|
       if document.type == :document
-        unless document.resource.body.custom_elements.empty?
+        if document.resource.has_example_bundle_js?
           File.write("src/#{document.name}-examples.js", document.resource.example_bundle_js)
         end
       end
