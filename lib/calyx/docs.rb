@@ -39,7 +39,7 @@ module Calyx
       attribute :body, :gfm
 
       def is_guide?
-        false
+        true
       end
 
       def body_html
@@ -68,7 +68,7 @@ BUNDLE
         body.custom_elements.any? { |el| el.has_runnable_custom_elements? }
       end
     end
-    # 
+    #
     # class Bundle
     #   def initialize(custom_elements)
     #     @custom_elements = custom_elements

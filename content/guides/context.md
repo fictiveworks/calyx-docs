@@ -26,18 +26,47 @@ The `#generate` method accepts an optional context map parameter which can be us
 
 The context map is a hash, with the keys being symbols defining the rules and the values being template expansion strings.
 
-The following example demonstrates how a field returned from a database query could be injected into a grammar to produce a randomized welcome message for users of an app.
+The following example demonstrates how a username or first name value can be injected into a grammar to produce a randomized welcome message for users of an app.
 
 ```ruby
 greeting = Calyx::Grammar.new do
   start 'Hi {username}', 'Welcome back {username}', 'Hola {username}'
 end
 
-user = User.find(id: user_id)
-
-context = {
-  username: user.name
+user = {
+  name: "Erika"
 }
 
-greeting.generate(context)
+greeting.generate({
+  username: user[:name]
+})
+```
+
+```js
+const greeting = calyx.grammar({
+  start: ["Hi {username}", "Welcome back {username}", "Hola {username}"]
+})
+
+const user = {
+  name: "Erika"
+}
+
+greeting.generate({
+  username: user.name
+})
+```
+
+```cs
+Grammar greeting = new Calyx.Grammar(G => {
+  G.Start(new[] { "Hi {username}", "Welcome back {username}", "Hola {username}" })
+});
+
+using User = Dictionary<string, string>;
+User user = new User {
+  { "name", "Erika" }
+}
+
+greeting.Generate(new Dictionary<string, string> {
+  { "username", user["name"] }
+});
 ```

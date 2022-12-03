@@ -61,3 +61,27 @@ You can also download the latest build of the project as a ZIP archive:
 ```
 wget https://github.com/maetl/calyx/archive/master.zip
 ```
+
+## Installing in a Project
+
+### Package Manager
+
+JavaScript via NPM:
+
+```
+npm install calyx
+```
+
+Ruby via Rubygems:
+
+```
+gem install calyx
+```
+
+C# via NuGet:
+
+```
+dotnet add package Calyx --version 0.3.0
+```
+
+## Manual Installation
