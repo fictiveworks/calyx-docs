@@ -39,7 +39,12 @@ YARD::Templates::Engine.register_template_path("templates/yard")
 #   t.files = ["packages/mementus-rb/lib/**/*.rb"]
 # end
 
+# :calyx_api_rb
+# https://github.com/skatkov/rdoc-markdown
+
 task :calyx_api_js do
+  # Convert JSDoc to Markdown
+  # npm install --save-dev jsdoc-to-markdown
   sh "npm run build:calyx"
 end
 
