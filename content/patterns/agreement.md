@@ -62,35 +62,35 @@ In following example, we pick from a list of nouns *Snowball*, *Santa’s Little
 ```ruby
 require "calyx"
 
-pet_sentence = Calyx::Grammar.new do
+pets = Calyx::Grammar.new do
   start "{animal} {verb}."
   animal "Snowball", "Santa’s Little Helper"
   verb "chases", "licks", "bites"
 end
 
-pet_sentence.generate
+pets.generate
 ```
 
 ```javascript
 import { grammar } from "calyx"
 
-const petSentence = calyx.grammar({
+const pets = calyx.grammar({
   start: "{animal} {verb}.",
   animal: ["Snowball", "Santa’s Little Helper"],
   verb: ["chases", "licks", "bites"]
 })
 
-petSentence.generate()
+pets.generate()
 ```
 
 ```cs
-Grammar petSentence = new Grammar(R => {
+Grammar pets = new Grammar(R => {
   R.Start("{animal} {verb}.");
   R.Rule("animal", new[] { "Snowball", "Santa’s Little Helper" });
   R.Rule("verb", new[] { "chases", "licks", "bites" });
 });
 
-petSentence.Generate();
+pets.Generate();
 ```
 
 </example-console>
@@ -102,7 +102,7 @@ We can rewrite this generator to a subject–verb–object form that incorporate
 ```ruby
 require "calyx"
 
-cat_n_mouse = Calyx::Grammar.new do
+pets = Calyx::Grammar.new do
   start "{animal} {verb} {possessive} {appendage}."
   animal "Snowball", "Santa’s Little Helper"
   verb "chases", "licks", "bites"
@@ -110,13 +110,13 @@ cat_n_mouse = Calyx::Grammar.new do
   appendage "tail", "paw"
 end
 
-cat_n_mouse.generate
+pets.generate
 ```
 
 ```js
 import { grammar } from "calyx";
 
-const catAndMouse = grammar({
+const pets = grammar({
   start: "{animal} {verb} {possessive} {appendage}.",
   animal: ["Snowball", "Santa’s Little Helper"],
   verb: ["chases", "licks", "bites"],
@@ -124,11 +124,11 @@ const catAndMouse = grammar({
   appendage: ["tail", "paw"]
 })
 
-catAndMouse.generate()
+pets.generate()
 ```
 
 ```cs
-Grammar catAndMouse = new Grammar(R => {
+Grammar pets = new Grammar(R => {
   R.Start("{animal} {verb} {possessive} {appendage}.");
   R.Rule("animal", new[] { "Snowball", "Santa’s Little Helper" });
   R.Rule("verb", new[] { "chases", "licks", "bites" });
@@ -136,7 +136,7 @@ Grammar catAndMouse = new Grammar(R => {
   R.Rule("appendage", new[] { "tail", "paw" });
 });
 
-catAndMouse.Generate();
+pets.Generate();
 ```
 
 </example-console>
@@ -152,27 +152,27 @@ The first thing we can do is try to break up the sentence into fragments that co
 ```ruby
 require "calyx"
 
-cat_n_mouse = Calyx::Grammar.new do
+pets = Calyx::Grammar.new do
   start "Snowball {verb} her {appendage}",
         "Santa’s Little Helper {verb} his {appendage}"
   verb "chases", "licks", "bites"
   appendage "tail", "paw"
 end
 
-cat_n_mouse.generate
+pets.generate
 ```
 
 ```javascript
 import { grammar } from "calyx";
 
-const catAndMouse = grammar({
+const pets = grammar({
   start: ["Snowball {verb} her {appendage}",
           "Santa’s Little Helper {verb} his {appendage}"],
   verb: ["chases", "licks", "bites"],
   appendage: ["tail", "paw"]
 })
 
-catAndMouse.generate()
+pets.generate()
 ```
 
 </example-console>
@@ -182,7 +182,7 @@ We now have sentences that agree consistently but the trade-off is that the gram
 One way to balance keeping the grammar context-free without losing the flexibility of atomic word lists is to carefully separate the sentence fragment branches and gramatical categories into a more intricate set of production rules.
 
 ```ruby
-cat_n_mouse = Calyx::Grammar.new do
+pets = Calyx::Grammar.new do
   start "{f_phrase}.", "{m_phrase}."
   f_animal "Snowball"
   f_phrase "{f_animal} {verb} {f_posessive} {appendage}"
@@ -193,10 +193,12 @@ cat_n_mouse = Calyx::Grammar.new do
   verb "chases", "licks", "bites"
   appendage "tail", "paw"
 end
+
+pets.generate
 ```
 
 ```js
-const catNMouse = grammar({
+const pets = grammar({
   start: ["{f_phrase}.", "{m_phrase}."],
   f_animal: "Snowball",
   f_phrase: "{f_animal} {verb} {f_posessive} {appendage}",
@@ -208,7 +210,7 @@ const catNMouse = grammar({
   appendage: ["tail", "paw"]
 })
 
-catNMouse.generate()
+pets.generate()
 ```
 
 Now we’ve rewritten the grammar with separate masculine and feminine branches that draw from different sets of productions. It’s more flexible and easier to update the lists of nouns but the trade-off stands out at a glance: our new grammar is much more intricate and abstract.
@@ -220,11 +222,11 @@ Despite these drawbacks, there are situations where this kind of branching is a 
 - When you have a small set of crafted sentence templates to combine with a large corpus of verbs or nouns
 - When you want to export grammars for remixing and combining in other projects
 
-## Modifiers as an escape hatch
+## Filters as an escape hatch
 
 If we want to avoid repetitive branching, we need to go beyond the constraints of context-free expansion.
 
-An alternative to crafting agreement and inflection rules into the structure of the grammar is to extend the expression syntax with custom modifier functions and manually handle the string transformations in code to get the desired result.
+An alternative to crafting agreement and inflection rules into the structure of the grammar is to extend the expression syntax with custom filter methods and manually handle the string transformations in code to get the desired result.
 
 Prefixing an expression with the `@` sigil allows multiple references in the grammar to point to the same choice rather than picking a different branch each time, which is how we get consistent agreement between the names and posessives.
 
@@ -240,14 +242,16 @@ module PosessiveNouns
   end
 end
 
-Calyx::Grammar.register_modifiers(PosessiveNouns)
-
-cat_n_mouse = Calyx::Grammar.new do
+pets = Calyx::Grammar.new do
   start "{@animal} {verb} {@animal.posessive} {appendage}"
   animal "Snowball", "Santa’s Little Helper"
   verb "chases", "licks", "bites"
   appendage "tail", "paw"
 end
+
+pets.filters(PosessiveNouns)
+
+pets.generate
 ```
 
 ```js
@@ -261,16 +265,41 @@ function posessive(noun) {
   }
 }
 
-registerModifiers({posessive})
-
-calyx.grammar({
+const pets = calyx.grammar({
   start: "{@animal} {verb} {@animal.posessive} {appendage}",
   animal: ["Snowball", "Santa’s Little Helper"],
   verb: ["chases", "licks", "bites"],
   appendage: ["tail", "paw"]
 })
 
-calyx.generate()
+pets.filter(posessive)
+
+pets.generate()
+```
+
+```cs
+public static class PosessiveNouns {
+
+  [FilterName("posessive")]
+  public static string Posessive(string input, Options options) {
+    switch(input) {
+      case "Snowball": return "her";
+      case "Santa’s Little Helper": return "his";
+      default: return "their";
+    }
+  }
+}
+
+Grammar pets = new Grammar(R => {
+  R.Start("{@animal} {verb} {@animal.posessive} {appendage}");
+  R.Rule("animal", new[] { "Snowball", "Santa’s Little Helper" });
+  R.Rule("verb", new[] { "chases", "licks", "bites" });
+  R.Rule("appendage", new[] { "tail", "paw" });
+});
+
+pets.Filters(typeof(PosessiveNouns));
+
+pets.Generate();
 ```
 
 People will have different opinions on the trade-off of simplicity and indirection here. The grammar itself is compact and readable but relies on special-case string modifiers which can’t be exported to JSON or embedded in cross-platform environments.
@@ -280,23 +309,4 @@ Consider this pattern:
 - When your project is self-contained and you don’t plan to export to other engines
 - When you want to use 3rd party linguistics or formatting APIs (links to recommended libraries here soon)
 
-## Look it up in the dictionary
 
-Handling this mapping from one to the other is a recurring problem when making large grammars, so Calyx provides a shortcut for adding paired lookups in the grammar directly.
-
-Here, the `{@animal>posessive}` shortcut inflects the output of the memoized `animal` rule using the lookup table declared in `posessive`.
-
-```js
-calyx.grammar({
-  start: "{@animal} {verb} {@animal>posessive} {appendage}",
-  animal: ["Snowball", "Santa’s Little Helper"]
-  posessive: {
-    "Snowball": "her",
-    "Santa’s Little Helper": "his"
-  },
-  verb: ["chases", "licks", "bites"],
-  appendage: ["tail", "paw"]
-})
-```
-
-Using Calyx’s syntax features like this results in a more abstract and compact grammar, with the tradeoff of having to get used to the custom syntax for map lookups.
