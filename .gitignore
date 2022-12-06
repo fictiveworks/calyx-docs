@@ -1,6 +1,5 @@
 .DS_Store
 .yardoc
-doc/
 out/
 node_modules/
 packages/

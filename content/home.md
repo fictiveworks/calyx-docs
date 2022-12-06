@@ -1,5 +1,0 @@
-# Calyx
-
-## Phrase structure
-
-## 
