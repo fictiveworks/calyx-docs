@@ -1,18 +1,3 @@
-# Fictive Works Documentation
+# Calyx Docs
 
-## Projects
-
-- Calyx
-- Mementus
-
-## API Docs
-
-### Javascript
-
-- Calyx
-- Mementus
-
-### Ruby
-
-- Calyx
-- Mementus
+This is the main documentation website for Calyx. You can see the live site at [calyx.fictiveworks.org](https://calyx.fictiveworks.org).
