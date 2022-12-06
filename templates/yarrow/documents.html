@@ -8,12 +8,34 @@
   </head>
   <body>
     {{> navbar}}
-    {{> hero}}
 
-    {{resource.title}}
+    {{#resource.is_home?}}
+      {{> hero}}
+    {{/resource.is_home?}}
 
-    {{{resource.body_html}}}
-
+    <main class="page">
+      {{#resource.is_doc_index?}}
+        <header class="pagebar">
+          <ul class="breadcrumbs">
+            {{#breadcrumbs}}
+              <li><a href="{{crumb_url}}">{{crumb_title}}</a></li>
+            {{/breadcrumbs}}
+          </ul>
+          <h1>{{resource.title}}</h1>
+        </header>
+        <article class="documents">
+          <header class="intro">
+            {{{resource.body_html}}}
+          </header>
+          {{#children}}
+            <h2><a href="{{url}}">{{title}}</a></h2>
+          {{/children}}
+        </article>
+        <aside class="sidebar">
+          {{> guides-menu}}
+        </aside>
+      {{/resource.is_doc_index?}}
+    </main>
     <div class="introduction">
       <div class="introduction-box">
         <h2>What is Calyx?</h2>

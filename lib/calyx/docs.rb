@@ -11,6 +11,15 @@ module Calyx
       attribute :name, :string
       attribute :title, :string
       attribute :body, :gfm
+      #attribute :layout, :string
+
+      def is_home?
+        name == "content"
+      end
+
+      def is_doc_index?
+        name != "content"
+      end
 
       def body_html
         body.to_html

@@ -1,7 +1,7 @@
 PATH
   remote: ../../yarrow
   specs:
-    yarrow (0.8.4)
+    yarrow (0.8.5)
       addressable (~> 2.8)
       em-websocket (~> 0.5.1)
       eventmachine (~> 1.2)
