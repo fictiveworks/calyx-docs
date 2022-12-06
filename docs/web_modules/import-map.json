@@ -1,0 +1,9 @@
+{
+  "imports": {
+    "calyx": "./calyx.js",
+    "haunted": "./haunted.js",
+    "lit": "./lit.js",
+    "lit-html": "./lit-html.js",
+    "lit-html/directives/unsafe-html.js": "./lit-html/directives/unsafe-html.js"
+  }
+}
