@@ -2,18 +2,18 @@ import calyx from "calyx";
 
 function context_free_expansion(action) {
   
-  const petSentence = calyx.grammar({
+  const pets = calyx.grammar({
     start: "{animal} {verb}.",
     animal: ["Snowball", "Santa’s Little Helper"],
     verb: ["chases", "licks", "bites"]
   })
   
-  return petSentence.generate()
+  return pets.generate()
 }
 
 function subject_verb_object(action) {
   
-  const catAndMouse = grammar({
+  const pets = grammar({
     start: "{animal} {verb} {possessive} {appendage}.",
     animal: ["Snowball", "Santa’s Little Helper"],
     verb: ["chases", "licks", "bites"],
@@ -21,19 +21,19 @@ function subject_verb_object(action) {
     appendage: ["tail", "paw"]
   })
   
-  return catAndMouse.generate()
+  return pets.generate()
 }
 
 function branch_fragments(action) {
   
-  const catAndMouse = grammar({
+  const pets = grammar({
     start: ["Snowball {verb} her {appendage}",
             "Santa’s Little Helper {verb} his {appendage}"],
     verb: ["chases", "licks", "bites"],
     appendage: ["tail", "paw"]
   })
   
-  return catAndMouse.generate()
+  return pets.generate()
 }
 
 const exampleHandlers = {
